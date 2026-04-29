@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
+        /* Të gjitha stilet si më parë, vetëm shtojmë disa rregullime për zemrën */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; }
-        
-        /* Sidebar */
         .sidebar {
             position: fixed; left: 0; top: 0; width: 80px; height: 100vh;
             background: rgba(10,10,15,0.96); backdrop-filter: blur(12px);
@@ -31,159 +30,43 @@
         .sidebar a:hover, .sidebar a.active { color: #e50914; transform: translateY(-3px); }
         
         .main { margin-left: 80px; padding: 20px 40px; max-width: calc(100% - 80px); }
-        
-        /* Hero Slider */
-        .hero-slider {
-            position: relative;
-            margin-bottom: 40px;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.6);
-        }
-        .swiper {
-            width: 100%;
-            height: 600px;
-        }
-        .swiper-slide {
-            position: relative;
-        }
-        .slide-bg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        .swiper-slide-active .slide-bg {
-            transform: scale(1.02);
-        }
-        .slide-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
-        }
+        .hero-slider { position: relative; margin-bottom: 40px; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.6); }
+        .swiper { width: 100%; height: 600px; }
+        .swiper-slide { position: relative; }
+        .slide-bg { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .swiper-slide-active .slide-bg { transform: scale(1.02); }
+        .slide-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%); }
         .slide-description-card {
-            position: absolute;
-            left: 60px;
-            bottom: 80px;
-            max-width: 520px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(16px);
-            padding: 28px 32px;
-            border-radius: 32px;
-            border-left: 5px solid #e50914;
+            position: absolute; left: 60px; bottom: 80px; max-width: 520px;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(16px);
+            padding: 28px 32px; border-radius: 32px; border-left: 5px solid #e50914;
             z-index: 15;
         }
-        .slide-description-card h2 {
-            font-size: 38px;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #fff, #e50914);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .slide-meta {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 14px;
-            font-size: 14px;
-            color: #ddd;
-        }
+        .slide-description-card h2 { font-size: 38px; font-family: 'Playfair Display', serif; font-weight: 700; margin-bottom: 12px; background: linear-gradient(135deg,#fff,#e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .slide-meta { display: flex; gap: 20px; margin-bottom: 14px; font-size: 14px; color: #ddd; }
         .rating { color: #f5c518; font-weight: 600; }
-        .slide-description-card p {
-            font-size: 15px;
-            line-height: 1.5;
-            margin-bottom: 18px;
-            color: #e0e0e0;
-        }
-        .slide-cast {
-            font-size: 13px;
-            color: #bbb;
-            margin-bottom: 22px;
-        }
-        .btn-watch {
-            background: #e50914;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 50px;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.25s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .btn-watch:hover {
-            background: #b81d24;
-            transform: scale(1.02);
-        }
+        .slide-description-card p { font-size: 15px; line-height: 1.5; margin-bottom: 18px; color: #e0e0e0; }
+        .slide-cast { font-size: 13px; color: #bbb; margin-bottom: 22px; }
+        .btn-watch { background: #e50914; border: none; padding: 12px 32px; border-radius: 50px; color: white; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.25s; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-watch:hover { background: #b81d24; transform: scale(1.02); }
         
-        .slider-static-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 20;
-            width: 90%;
-            max-width: 700px;
-            pointer-events: none;
-        }
-        .slider-static-content h1 {
-            font-size: 64px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, #e50914);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-            pointer-events: none;
-        }
-        .slider-static-content .slider-search {
-            pointer-events: auto;
-        }
-        .slider-search input {
-            width: 80%;
-            max-width: 500px;
-            padding: 14px 24px;
-            border-radius: 60px;
-            border: none;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            color: white;
-            font-size: 16px;
-            outline: none;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        .slider-search input:focus {
-            background: rgba(0,0,0,0.8);
-            border-color: #e50914;
-        }
+        .slider-static-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 20; width: 90%; max-width: 700px; pointer-events: none; }
+        .slider-static-content h1 { font-size: 64px; font-weight: 800; background: linear-gradient(135deg,#fff,#e50914); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1px; margin-bottom: 20px; pointer-events: none; }
+        .slider-static-content .slider-search { pointer-events: auto; }
+        .slider-search input { width: 80%; max-width: 500px; padding: 14px 24px; border-radius: 60px; border: none; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); color: white; font-size: 16px; outline: none; text-align: center; border: 1px solid rgba(255,255,255,0.3); }
+        .slider-search input:focus { background: rgba(0,0,0,0.8); border-color: #e50914; }
         
-        /* Seksionet dhe grid */
         .section-header { display: flex; justify-content: space-between; align-items: baseline; margin: 40px 0 20px; flex-wrap: wrap; }
         .section-title { font-size: 24px; font-weight: 700; border-left: 4px solid #e50914; padding-left: 15px; }
         .pagination-controls { display: flex; gap: 8px; }
         .page-btn { background: #1e2026; border: none; padding: 6px 14px; border-radius: 30px; color: #ccc; cursor: pointer; }
         .page-btn.active, .page-btn:hover { background: #e50914; color: white; }
-        .movies-grid, .tv-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 20px; margin-bottom: 30px; }
+        .movies-grid, .tv-grid { display: grid; grid-template-columns: repeat(8,1fr); gap: 20px; margin-bottom: 30px; }
         @media (max-width:1400px){ .movies-grid, .tv-grid { grid-template-columns: repeat(6,1fr); } }
         @media (max-width:1100px){ .movies-grid, .tv-grid { grid-template-columns: repeat(4,1fr); } }
         .movie-card, .tv-card {
-            background: #181a24;
-            border-radius: 14px;
-            overflow: hidden;
-            transition: transform 0.25s;
-            cursor: pointer;
-            position: relative;
+            background: #181a24; border-radius: 14px; overflow: hidden;
+            transition: transform 0.25s; cursor: pointer; position: relative;
         }
         .movie-card:hover, .tv-card:hover { transform: translateY(-6px); box-shadow: 0 12px 20px rgba(0,0,0,0.4); }
         .poster { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
@@ -191,7 +74,7 @@
         .card-info h4 { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-info p { font-size: 12px; color: #aaa; }
         
-        /* Butoni i preferuar (zemra) në kartelë */
+        /* Butoni i zemrës - më i dukshëm */
         .favorite-btn {
             position: absolute;
             top: 10px;
@@ -199,24 +82,24 @@
             background: rgba(0,0,0,0.6);
             backdrop-filter: blur(4px);
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 15;
+            z-index: 20;
             transition: 0.2s;
         }
         .favorite-btn i {
             font-size: 18px;
-            color: #fff;
-            transition: 0.2s;
+            transition: 0.1s;
         }
-        .favorite-btn i.fas { color: #e50914; }
-        .favorite-btn:hover { transform: scale(1.1); }
+        .favorite-btn i.fas { color: #e50914; text-shadow: 0 0 2px rgba(0,0,0,0.5); }
+        .favorite-btn i.far { color: #fff; }
+        .favorite-btn:hover { transform: scale(1.1); background: rgba(0,0,0,0.8); }
         
-        /* Dritarja e trailerit (e përmirësuar - më e madhe dhe interaktive) */
+        /* Preview i madh dhe interaktiv */
         .preview-rich {
             position: fixed;
             width: 480px;
@@ -226,29 +109,13 @@
             z-index: 2000;
             border: 1px solid #e50914;
             box-shadow: 0 20px 35px rgba(0,0,0,0.6);
-            transition: 0.1s;
             pointer-events: auto;
         }
-        .preview-trailer iframe {
-            width: 100%;
-            height: 270px;
-            border: none;
-        }
-        .preview-info {
-            padding: 16px;
-        }
-        .preview-info h4 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            color: #e50914;
-        }
-        .preview-info p {
-            font-size: 14px;
-            color: #ccc;
-            line-height: 1.4;
-        }
+        .preview-trailer iframe { width: 100%; height: 270px; border: none; }
+        .preview-info { padding: 16px; }
+        .preview-info h4 { font-size: 18px; margin-bottom: 8px; color: #e50914; }
+        .preview-info p { font-size: 14px; color: #ccc; }
         
-        /* Pjesa tjetër (footer, modal, etj.) */
         .footer { margin-top: 60px; background: #0c0e12; border-radius: 30px 30px 0 0; padding: 40px 30px 20px; }
         .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 40px; }
         .footer-logo { font-size: 24px; font-weight: 800; background: linear-gradient(135deg,#fff,#e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -263,26 +130,10 @@
         .auth-form input { padding:10px; border-radius:30px; border:none; background:#2a2c30; color:white; }
         .btn-primary { background:#e50914; border:none; padding:10px; border-radius:30px; color:white; cursor:pointer; }
         
-        /* Seksioni i Favorites (kur shfaqet vetëm lista e preferuarave) */
-        .favorites-section {
-            display: none;
-            margin-top: 20px;
-        }
-        .favorites-section.active {
-            display: block;
-        }
-        .back-to-home {
-            display: inline-block;
-            margin-bottom: 20px;
-            background: #1e2026;
-            padding: 8px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .back-to-home:hover {
-            background: #e50914;
-        }
+        .favorites-section { display: none; margin-top: 20px; }
+        .favorites-section.active { display: block; }
+        .back-to-home { display: inline-block; margin-bottom: 20px; background: #1e2026; padding: 8px 20px; border-radius: 30px; cursor: pointer; transition: 0.2s; }
+        .back-to-home:hover { background: #e50914; }
     </style>
 </head>
 <body>
@@ -315,20 +166,17 @@
         </div>
     </div>
 
-    <!-- Rezultatet e kërkimit -->
     <div id="searchResultsContainer" style="display:none;">
         <div class="section-header"><h2 class="section-title"><i class="fas fa-search"></i> Search Results</h2></div>
         <div class="movies-grid" id="searchGrid"></div>
     </div>
 
-    <!-- Seksioni i Favorites (shfaqet kur klikohet Favorites në sidebar) -->
     <div id="favoritesSection" class="favorites-section">
         <div class="back-to-home" id="backToHomeBtn"><i class="fas fa-arrow-left"></i> Back to Home</div>
         <div class="section-header"><h2 class="section-title"><i class="fas fa-heart"></i> Your Favorites</h2></div>
         <div class="movies-grid" id="favoritesGrid"></div>
     </div>
 
-    <!-- 14 zhanre me filma (të fshehura kur shfaqen favorites) -->
     <div id="mainContent">
         <div class="section-header"><h2 class="section-title"><i class="fas fa-bolt"></i> Action</h2><div class="pagination-controls" id="actionPagination"></div></div>
         <div class="movies-grid" id="actionGrid"></div>
@@ -359,7 +207,6 @@
         <div class="section-header"><h2 class="section-title"><i class="fas fa-landmark"></i> History</h2><div class="pagination-controls" id="historyPagination"></div></div>
         <div class="movies-grid" id="historyGrid"></div>
 
-        <!-- Featured TV Series -->
         <div class="section-header"><h2 class="section-title"><i class="fas fa-crown"></i> Featured TV Series</h2><div class="pagination-controls" id="tvPagination"></div></div>
         <div class="tv-grid" id="tvSeriesGrid"></div>
     </div>
@@ -408,38 +255,11 @@
         }
 
         function isFavorite(id, type) {
-            return favorites.some(f => f.id === id && f.type === type);
+            return favorites.some(f => f.id == id && f.type === type);
         }
 
-        function addFavorite(item) {
-            if (!isFavorite(item.id, item.type)) {
-                favorites.push(item);
-                saveFavorites();
-                showToast(`❤️ "${item.title}" added to favorites`);
-                updateFavoriteIcon(item.id, item.type, true);
-            }
-        }
-
-        function removeFavorite(id, type) {
-            favorites = favorites.filter(f => !(f.id === id && f.type === type));
-            saveFavorites();
-            showToast(`💔 Removed from favorites`);
-            updateFavoriteIcon(id, type, false);
-            // Rifresko listën e favoritave nëse është e dukshme
-            if (document.getElementById('favoritesSection').classList.contains('active')) {
-                displayFavorites();
-            }
-        }
-
-        function toggleFavorite(id, type, title, poster) {
-            if (isFavorite(id, type)) {
-                removeFavorite(id, type);
-            } else {
-                addFavorite({ id, type, title, poster });
-            }
-        }
-
-        function updateFavoriteIcon(id, type, isFav) {
+        function updateAllFavoriteIcons(id, type, isFav) {
+            // Përditëson të gjithë butonat me këtë id dhe lloj në të gjithë DOM-in
             const btns = document.querySelectorAll(`.favorite-btn[data-id="${id}"][data-type="${type}"]`);
             btns.forEach(btn => {
                 const icon = btn.querySelector('i');
@@ -451,7 +271,39 @@
             });
         }
 
-        // Shfaq listën e favoritave në grid
+        function addFavorite(item) {
+            if (!isFavorite(item.id, item.type)) {
+                favorites.push({ id: item.id, type: item.type, title: item.title, poster: item.poster });
+                saveFavorites();
+                showToast(`❤️ "${item.title}" added to favorites`);
+                updateAllFavoriteIcons(item.id, item.type, true);
+                if (document.getElementById('favoritesSection').classList.contains('active')) {
+                    displayFavorites();
+                }
+            }
+        }
+
+        function removeFavorite(id, type) {
+            const favItem = favorites.find(f => f.id == id && f.type === type);
+            if (favItem) {
+                favorites = favorites.filter(f => !(f.id == id && f.type === type));
+                saveFavorites();
+                showToast(`💔 Removed from favorites`);
+                updateAllFavoriteIcons(id, type, false);
+                if (document.getElementById('favoritesSection').classList.contains('active')) {
+                    displayFavorites();
+                }
+            }
+        }
+
+        function toggleFavorite(id, type, title, poster) {
+            if (isFavorite(id, type)) {
+                removeFavorite(id, type);
+            } else {
+                addFavorite({ id, type, title, poster });
+            }
+        }
+
         function displayFavorites() {
             const container = document.getElementById('favoritesGrid');
             if (!container) return;
@@ -475,13 +327,11 @@
                         <p>⭐ Favorite</p>
                     </div>
                 `;
-                // Event klikimi për të shkuar te faqja e shikimit
                 card.addEventListener('click', (e) => {
                     if (e.target.closest('.favorite-btn')) return;
                     if (fav.type === 'tv') window.location.href = `tv.html?id=${fav.id}`;
                     else window.location.href = `watch.html?id=${fav.id}&type=movie`;
                 });
-                // Event për butonin e zemrës brenda favoritave
                 const favBtn = card.querySelector('.favorite-btn');
                 favBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -491,9 +341,8 @@
             });
         }
 
-        // =============== PREVIEW E PËRMIRËSUAR (më e madhe dhe interaktive) ===============
+        // =============== PREVIEW ===============
         function showRichPreview(item, cardEl, isTv) {
-            // Nëse ka tashmë një preview dhe është e njëjta kartelë, mos e rri
             if (activePreview && currentCard === cardEl) return;
             removePreview();
             currentCard = cardEl;
@@ -523,37 +372,24 @@
                     const rect = cardEl.getBoundingClientRect();
                     let left = rect.left + rect.width + 15;
                     let top = rect.top + window.scrollY;
-                    if (left + 480 > window.innerWidth) {
-                        left = rect.left - 490;
-                    }
-                    if (top + 400 > window.innerHeight + window.scrollY) {
-                        top = window.innerHeight + window.scrollY - 420;
-                    }
+                    if (left + 480 > window.innerWidth) left = rect.left - 490;
+                    if (top + 400 > window.innerHeight + window.scrollY) top = window.innerHeight + window.scrollY - 420;
                     preview.style.top = top + 'px';
                     preview.style.left = left + 'px';
-                    // Lejon miun të kalojë mbi preview pa e zhdukur
-                    preview.addEventListener('mouseenter', () => {
-                        if (previewTimeout) clearTimeout(previewTimeout);
-                    });
+                    preview.addEventListener('mouseenter', () => { if (previewTimeout) clearTimeout(previewTimeout); });
                     preview.addEventListener('mouseleave', () => {
-                        previewTimeout = setTimeout(() => {
-                            removePreview();
-                            currentCard = null;
-                        }, 300);
+                        previewTimeout = setTimeout(() => { removePreview(); currentCard = null; }, 300);
                     });
                 }).catch(e => console.error(e));
             }).catch(e => console.error(e));
         }
 
         function removePreview() {
-            if (activePreview) {
-                activePreview.remove();
-                activePreview = null;
-            }
+            if (activePreview) { activePreview.remove(); activePreview = null; }
             if (previewTimeout) clearTimeout(previewTimeout);
         }
 
-        // =============== KRIJIMI I KARTELAVE (me butonin e zemrës dhe preview të ri) ===============
+        // =============== KRIJIMI I KARTELAVE ===============
         function createCard(item, isTv, containerId) {
             const card = document.createElement('div');
             card.className = isTv ? 'tv-card' : 'movie-card';
@@ -576,13 +412,10 @@
             `;
             let hoverTimeout;
             card.addEventListener('mouseenter', () => {
-                hoverTimeout = setTimeout(() => {
-                    showRichPreview(item, card, isTv);
-                }, 400);
+                hoverTimeout = setTimeout(() => showRichPreview(item, card, isTv), 400);
             });
             card.addEventListener('mouseleave', () => {
                 clearTimeout(hoverTimeout);
-                // Mos e hiq preview menjëherë nëse miu është mbi preview
                 setTimeout(() => {
                     if (activePreview && !activePreview.matches(':hover') && !card.matches(':hover')) {
                         removePreview();
@@ -603,7 +436,7 @@
             document.getElementById(containerId).appendChild(card);
         }
 
-        // =============== FUNKSIONET E NGARKIMIT TË FILMAVE (të pandryshuara) ===============
+        // =============== NGARKIMI I FILMAVE DHE SERIALEVE ===============
         async function loadGenreMovies(genreId, gridId, pagId, page = 1) {
             const grid = document.getElementById(gridId);
             if (!grid) return;
@@ -706,31 +539,22 @@
             }
             if (swiper) swiper.destroy();
             swiper = new Swiper('.heroSwiper', {
-                loop: true,
-                autoplay: { delay: 6000, disableOnInteraction: false },
+                loop: true, autoplay: { delay: 6000, disableOnInteraction: false },
                 navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-                pagination: { el: '.swiper-pagination', clickable: true },
-                speed: 800
+                pagination: { el: '.swiper-pagination', clickable: true }, speed: 800
             });
         }
 
         async function searchContent(query) {
             const container = document.getElementById('searchResultsContainer');
             const grid = document.getElementById('searchGrid');
-            if (!query || query.length < 3) {
-                container.style.display = 'none';
-                return;
-            }
+            if (!query || query.length < 3) { container.style.display = 'none'; return; }
             try {
                 const res = await fetch(`${BASE}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=en-US`);
                 const data = await res.json();
                 const results = data.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv').slice(0, 24);
                 grid.innerHTML = '';
-                if (results.length === 0) {
-                    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;">No results found.</div>';
-                    container.style.display = 'block';
-                    return;
-                }
+                if (results.length === 0) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;">No results found.</div>'; container.style.display = 'block'; return; }
                 results.forEach(item => createCard(item, item.media_type === 'tv', 'searchGrid'));
                 container.style.display = 'block';
             } catch(e) { console.error(e); }
@@ -749,7 +573,6 @@
             genres.forEach(g => loadGenreMovies(g.id, g.grid, g.pag, 1));
         }
 
-        // =============== SHFAQJA E FAVORITEVE DHE FSHIHJA E PËRMBAJTJES KRYESORE ===============
         function showFavorites() {
             document.getElementById('mainContent').style.display = 'none';
             document.getElementById('searchResultsContainer').style.display = 'none';
@@ -761,7 +584,6 @@
             document.getElementById('mainContent').style.display = 'block';
             document.getElementById('favoritesSection').classList.remove('active');
             document.getElementById('searchResultsContainer').style.display = 'none';
-            // Rifresko sliderin nëse nevojitet
         }
 
         // Event listeners
