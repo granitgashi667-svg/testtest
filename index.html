@@ -11,167 +11,76 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; }
         
-        /* Sidebar - vetëm ikona */
+        /* Sidebar me tekst */
         .sidebar {
-            position: fixed; left: 0; top: 0; width: 80px; height: 100vh;
+            position: fixed; left: 0; top: 0; width: 110px; height: 100vh;
             background: rgba(10,10,15,0.96); backdrop-filter: blur(12px);
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: space-between; padding: 30px 0;
+            display: flex; flex-direction: column;
+            justify-content: space-between; padding: 30px 0 30px 0;
             z-index: 100; border-right: 1px solid rgba(255,255,255,0.08);
         }
-        .sidebar-top { display: flex; flex-direction: column; align-items: center; gap: 30px; }
-        .sidebar-bottom { margin-bottom: 20px; }
+        .sidebar-top {
+            display: flex; flex-direction: column; align-items: center; gap: 25px;
+        }
+        .sidebar-bottom {
+            display: flex; flex-direction: column; align-items: center; gap: 25px;
+        }
         .sidebar a {
             display: flex; flex-direction: column; align-items: center;
             text-decoration: none; color: #aaa; gap: 5px;
-            transition: 0.2s; font-size: 12px;
+            transition: 0.2s; font-size: 11px; font-weight: 500;
         }
-        .sidebar a i { font-size: 24px; }
+        .sidebar a i { font-size: 22px; }
         .sidebar a:hover, .sidebar a.active { color: #e50914; transform: translateY(-3px); }
         
-        /* Main */
-        .main { margin-left: 80px; padding: 20px 40px; max-width: calc(100% - 80px); }
+        .main { margin-left: 110px; padding: 20px 40px; max-width: calc(100% - 110px); }
         
-        /* Hero Slider - me lartësi më të madhe */
-        .hero-slider {
-            position: relative;
-            margin-bottom: 40px;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5);
-        }
+        /* Hero Slider */
+        .hero-slider { position: relative; margin-bottom: 40px; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5); }
         .swiper { width: 100%; height: 600px; }
         .swiper-slide { position: relative; }
         .slide-bg { width: 100%; height: 100%; object-fit: cover; }
+        .slide-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 100%); }
         
-        /* Overlay i errët për të lexuar tekstit */
-        .slide-overlay {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 100%);
-        }
-        
-        /* Dritarja e përshkrimit - e përmirësuar si karton */
         .slide-description-card {
-            position: absolute;
-            left: 60px;
-            bottom: 60px;
-            max-width: 500px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(12px);
-            padding: 24px 28px;
-            border-radius: 24px;
-            border-left: 5px solid #e50914;
-            z-index: 15;
-            transition: all 0.3s ease;
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.4);
+            position: absolute; left: 60px; bottom: 60px; max-width: 500px;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px);
+            padding: 24px 28px; border-radius: 24px; border-left: 5px solid #e50914;
+            z-index: 15; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.4);
         }
-        
-        .slide-description-card h2 {
-            font-size: 36px;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-        }
-        
-        .slide-meta {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 12px;
-            font-size: 14px;
-            color: #ddd;
-        }
-        
+        .slide-description-card h2 { font-size: 36px; font-family: 'Playfair Display', serif; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .slide-meta { display: flex; gap: 16px; margin-bottom: 12px; font-size: 14px; color: #ddd; }
         .slide-meta span i { margin-right: 6px; }
         .rating { color: #f5c518; font-weight: 600; }
-        
-        .slide-description-card p {
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 16px;
-            color: #ccc;
-            opacity: 0.95;
-        }
-        
-        .slide-cast {
-            font-size: 13px;
-            color: #aaa;
-            margin-bottom: 20px;
-        }
-        
+        .slide-description-card p { font-size: 14px; line-height: 1.5; margin-bottom: 16px; color: #ccc; }
+        .slide-cast { font-size: 13px; color: #aaa; margin-bottom: 20px; }
         .slide-cast strong { color: #e50914; }
-        
-        /* Butoni i zgjeruar Watch Now */
-        .btn-watch {
-            background: #e50914;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 50px;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 12px rgba(229,9,20,0.3);
-        }
-        
-        .btn-watch:hover {
-            background: #b81d24;
-            transform: scale(1.02);
-            box-shadow: 0 6px 16px rgba(229,9,20,0.4);
-        }
+        .btn-watch { background: #e50914; border: none; padding: 12px 32px; border-radius: 50px; color: white; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.25s; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(229,9,20,0.3); }
+        .btn-watch:hover { background: #b81d24; transform: scale(1.02); }
         
         /* Përmbajtja statike e sliderit (logo + search) */
         .slider-static-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 20;
-            width: 90%;
-            max-width: 700px;
-            pointer-events: none;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; z-index: 20; width: 90%; max-width: 700px; pointer-events: none;
         }
         .slider-static-content h1 {
-            font-size: 64px;
-            font-weight: 800;
+            font-size: 64px; font-weight: 800;
             background: linear-gradient(135deg, #fff, #e50914);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 30px rgba(0,0,0,0.5);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            letter-spacing: -1px; margin-bottom: 20px; text-shadow: 0 0 30px rgba(0,0,0,0.5);
             pointer-events: none;
         }
-        .slider-static-content .slider-search {
-            pointer-events: auto;
-        }
+        .slider-search { pointer-events: auto; }
         .slider-search input {
-            width: 80%;
-            max-width: 500px;
-            padding: 14px 24px;
-            border-radius: 60px;
-            border: none;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px);
-            color: white;
-            font-size: 16px;
-            outline: none;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.3);
+            width: 80%; max-width: 500px; padding: 14px 24px;
+            border-radius: 60px; border: none; background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px); color: white; font-size: 16px; outline: none;
+            text-align: center; border: 1px solid rgba(255,255,255,0.3);
             transition: 0.2s;
         }
-        .slider-search input:focus {
-            background: rgba(255,255,255,0.25);
-            border-color: #e50914;
-        }
+        .slider-search input:focus { background: rgba(255,255,255,0.25); border-color: #e50914; }
         
-        /* Seksionet e filmave - njësoj */
+        /* Seksionet e filmave */
         .section-header { display: flex; justify-content: space-between; align-items: baseline; margin: 40px 0 20px; flex-wrap: wrap; }
         .section-title { font-size: 24px; font-weight: 700; border-left: 4px solid #e50914; padding-left: 15px; }
         .pagination-controls { display: flex; gap: 8px; }
@@ -187,19 +96,16 @@
         .card-info h4 { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-info p { font-size: 12px; color: #aaa; }
         
-        /* Preview Hover */
         .preview-rich { position: absolute; width: 340px; background: #1a1c22; border-radius: 16px; overflow: hidden; z-index: 2000; border: 1px solid #e50914; }
         .preview-trailer iframe { width: 100%; height: 190px; border: none; }
         .preview-info { padding: 12px; }
         
-        /* Footer */
         .footer { margin-top: 60px; background: #0c0e12; border-radius: 30px 30px 0 0; padding: 40px 30px 20px; }
         .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 40px; }
         .footer-logo { font-size: 24px; font-weight: 800; background: linear-gradient(135deg,#fff,#e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .social-links a { margin-right: 15px; color: #ccc; text-decoration: none; }
         .disclaimer { font-size: 12px; color: #888; background: #1a1c22; padding: 12px; border-radius: 12px; margin-top: 15px; }
         
-        /* Toast, Modal */
         .toast { position: fixed; bottom: 30px; right: 30px; background: #e50914; padding: 10px 20px; border-radius: 30px; opacity: 0; transition: 0.3s; z-index: 3500; }
         .toast.show { opacity: 1; }
         .modal { display: none; position: fixed; top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:3000;align-items:center;justify-content:center; }
@@ -214,13 +120,13 @@
 
 <div class="sidebar">
     <div class="sidebar-top">
-        <a href="#" id="homeLink"><i class="fas fa-home"></i></a>
-        <a href="#" id="moviesLink"><i class="fas fa-film"></i></a>
-        <a href="#" id="tvLink"><i class="fas fa-tv"></i></a>
-        <a href="#" id="favoritesLink"><i class="fas fa-heart"></i></a>
+        <a href="#" id="homeLink"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="#" id="moviesLink"><i class="fas fa-film"></i><span>Movies</span></a>
+        <a href="#" id="tvLink"><i class="fas fa-tv"></i><span>TV Shows</span></a>
+        <a href="#" id="favoritesLink"><i class="fas fa-heart"></i><span>Favorites</span></a>
     </div>
     <div class="sidebar-bottom">
-        <a href="#" id="userIconSidebar"><i class="fas fa-user-circle"></i></a>
+        <a href="#" id="userIconSidebar"><i class="fas fa-user-circle"></i><span>Login</span></a>
     </div>
 </div>
 
@@ -238,6 +144,12 @@
                 <input type="text" id="searchInputSlider" placeholder="Search movies, series...">
             </div>
         </div>
+    </div>
+
+    <!-- Search Results Container (shfaqet poshtë sliderit) -->
+    <div id="searchResultsContainer" style="display:none; margin-top: 20px;">
+        <div class="section-header"><h2 class="section-title"><i class="fas fa-search"></i> Search Results</h2></div>
+        <div class="movies-grid" id="searchGrid"></div>
     </div>
 
     <!-- 14 zhanre me filma (2000+) -->
@@ -273,11 +185,6 @@
     <!-- TV Series (500+) -->
     <div class="section-header"><h2 class="section-title"><i class="fas fa-crown"></i> Greatest TV Series (500+)</h2><div class="pagination-controls" id="tvPagination"></div></div>
     <div class="tv-grid" id="tvSeriesGrid"></div>
-
-    <div id="searchResultsContainer" style="display:none;">
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-search"></i> Search Results</h2></div>
-        <div class="movies-grid" id="searchGrid"></div>
-    </div>
 
     <footer class="footer">
         <div class="footer-content">
@@ -359,7 +266,13 @@
             let timeout;
             card.onmouseenter = () => { timeout = setTimeout(() => showRichPreview(item.id, card, isTv), 400); };
             card.onmouseleave = () => { clearTimeout(timeout); if(activePreview) activePreview.remove(); };
-            card.onclick = () => window.location.href = `watch.html?id=${item.id}&type=${isTv ? 'tv' : 'movie'}`;
+            card.onclick = () => {
+                if (isTv) {
+                    window.location.href = `tv.html?id=${item.id}`;
+                } else {
+                    window.location.href = `watch.html?id=${item.id}&type=movie`;
+                }
+            };
             document.getElementById(containerId).appendChild(card);
         }
         async function loadGenreMovies(genreId, gridId, pagId, page = 1, genreName) {
@@ -434,7 +347,6 @@
             const wrapper = document.getElementById('heroSlider');
             wrapper.innerHTML = '';
             for (const m of slides) {
-                // merr detaje plotësuese për rating, cast
                 const [det, credit] = await Promise.all([
                     fetch(`${BASE}/movie/${m.id}?api_key=${API_KEY}&language=en-US`).then(r=>r.json()),
                     fetch(`${BASE}/movie/${m.id}/credits?api_key=${API_KEY}&language=en-US`).then(r=>r.json())
@@ -470,7 +382,10 @@
             });
         }
         async function searchContent(query) {
-            if (!query || query.length < 2) { document.getElementById('searchResultsContainer').style.display = 'none'; return; }
+            if (!query || query.length < 3) {
+                document.getElementById('searchResultsContainer').style.display = 'none';
+                return;
+            }
             const res = await fetch(`${BASE}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=en-US`);
             const data = await res.json();
             const results = data.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv').slice(0, 24);
