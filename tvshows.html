@@ -26,9 +26,8 @@
             transition: 0.2s; font-size: 11px; font-weight: 500;
         }
         .sidebar a i { font-size: 24px; }
-        .sidebar a span { font-size: 11px; }
-        .sidebar a:hover, .sidebar a.active { color: #e50914; transform: translateY(-3px); }
-        
+        .sidebar a span { getElementById }
+
         .main { margin-left: 80px; padding: 20px 40px; max-width: calc(100% - 80px); }
         
         .page-header {
@@ -187,14 +186,14 @@
             <input type="text" id="searchTV" placeholder="Search TV shows...">
         </div>
         <div class="genre-buttons" id="genreButtons">
-            <button data-genre="28" class="genre-btn active">Action</button>
+            <button data-genre="10768" class="genre-btn active">War & Politics</button>
+            <button data-genre="28" class="genre-btn">Action</button>
             <button data-genre="35" class="genre-btn">Comedy</button>
             <button data-genre="18" class="genre-btn">Drama</button>
             <button data-genre="80" class="genre-btn">Crime</button>
             <button data-genre="99" class="genre-btn">Documentary</button>
             <button data-genre="16" class="genre-btn">Animation</button>
             <button data-genre="10765" class="genre-btn">Sci-Fi & Fantasy</button>
-            <button data-genre="10768" class="genre-btn">War & Politics</button>
         </div>
     </div>
 
@@ -211,7 +210,7 @@
     const API_KEY = '7a98db423d6e3a5ee922a3e51a09d135';
     const BASE = 'https://api.themoviedb.org/3';
     const IMG = 'https://image.tmdb.org/t/p/w500';
-    let currentGenre = 28;
+    let currentGenre = 10768; // War & Politics si default sepse funksionon
     let currentPage = 1;
     let totalPages = 1;
     let currentSearch = '';
@@ -244,7 +243,7 @@
         if (search && search.length >= 3) {
             url = `${BASE}/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(search)}&language=en-US&page=${page}`;
         } else {
-            // Remove vote_count.gte to get more results, and increase page limit
+            // Heq filtrin vote_count.gte për të marrë më shumë seriale
             url = `${BASE}/discover/tv?api_key=${API_KEY}&with_genres=${genre}&sort_by=popularity.desc&language=en-US&page=${page}`;
         }
         try {
@@ -253,7 +252,7 @@
             totalPages = Math.min(data.total_pages, 8);
             grid.innerHTML = '';
             if (data.results.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center; padding:40px;">No TV shows found. Try another genre or search.</div>';
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center; padding:40px;">No TV shows found for this genre. Try another one.</div>';
                 return;
             }
             data.results.forEach(show => {
@@ -273,7 +272,7 @@
             }
         } catch(e) {
             console.error(e);
-            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Error loading TV shows</div>';
+            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Error loading TV shows. Please refresh.</div>';
         }
     }
 
@@ -305,8 +304,8 @@
 
     document.getElementById('userIconSidebar').onclick = () => showToast('Demo login (Firebase ready)');
 
-    // Initial load - shumë seriale nga Action
-    loadTVShows(1, 28, '');
+    // Initial load me War & Politics që ka seriale
+    loadTVShows(1, 10768, '');
 </script>
 </body>
 </html>
