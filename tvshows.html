@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlbFilms24 - TV Series</title>
+    <title>AlbFilms24 - TV Shows</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
@@ -31,7 +31,6 @@
         
         .main { margin-left: 80px; padding: 20px 40px; max-width: calc(100% - 80px); }
         
-        /* Header i thjeshtë për këtë faqe */
         .page-header {
             margin-bottom: 30px;
         }
@@ -183,9 +182,9 @@
 
 <div class="main">
     <div class="page-header">
-        <h1>TV SERIES</h1>
+        <h1>TV SHOWS</h1>
         <div class="search-bar">
-            <input type="text" id="searchTV" placeholder="Search TV series... (min 3 letters)">
+            <input type="text" id="searchTV" placeholder="Search TV shows...">
         </div>
         <div class="genre-buttons" id="genreButtons">
             <button data-genre="28" class="genre-btn active">Action</button>
@@ -240,18 +239,23 @@
 
     async function loadTVShows(page = 1, genre = currentGenre, search = '') {
         const grid = document.getElementById('tvShowsGrid');
-        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center; padding:40px;">Loading series...</div>';
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center; padding:40px;">Loading TV shows...</div>';
         let url = '';
         if (search && search.length >= 3) {
             url = `${BASE}/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(search)}&language=en-US&page=${page}`;
         } else {
-            url = `${BASE}/discover/tv?api_key=${API_KEY}&with_genres=${genre}&sort_by=popularity.desc&vote_count.gte=50&language=en-US&page=${page}`;
+            // Remove vote_count.gte to get more results, and increase page limit
+            url = `${BASE}/discover/tv?api_key=${API_KEY}&with_genres=${genre}&sort_by=popularity.desc&language=en-US&page=${page}`;
         }
         try {
             const res = await fetch(url);
             const data = await res.json();
-            totalPages = Math.min(data.total_pages, 10);
+            totalPages = Math.min(data.total_pages, 8);
             grid.innerHTML = '';
+            if (data.results.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center; padding:40px;">No TV shows found. Try another genre or search.</div>';
+                return;
+            }
             data.results.forEach(show => {
                 if (show.poster_path) grid.appendChild(createCard(show));
             });
@@ -269,7 +273,7 @@
             }
         } catch(e) {
             console.error(e);
-            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Error loading series</div>';
+            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Error loading TV shows</div>';
         }
     }
 
@@ -301,7 +305,7 @@
 
     document.getElementById('userIconSidebar').onclick = () => showToast('Demo login (Firebase ready)');
 
-    // Initial load
+    // Initial load - shumë seriale nga Action
     loadTVShows(1, 28, '');
 </script>
 </body>
