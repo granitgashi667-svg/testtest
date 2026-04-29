@@ -7,9 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
-        /* E njëjta logo dhe sidebar si në index, por me disa ndryshime të vogla */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; }
+        /* Logo kinematografike (e njëjtë me index.html) */
         .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .logo-icon { position: relative; width: 55px; height: 55px; background: linear-gradient(135deg, #000000, #2a0000); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(229,9,20,0.3); overflow: hidden; }
         .logo-icon::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%); transform: rotate(25deg); animation: glossMove 6s infinite; }
@@ -26,6 +26,7 @@
         .clapper { display: inline-block; width: 18px; height: 18px; background: #e50914; margin-left: 5px; clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 60% 100%, 0% 80%); animation: clap 1s infinite; }
         @keyframes clap { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.9); } }
         
+        /* Sidebar i njëjtë */
         .sidebar { position: fixed; left: 0; top: 0; width: 120px; height: 100vh; background: rgba(10,10,15,0.96); backdrop-filter: blur(12px); display: flex; flex-direction: column; justify-content: space-between; padding: 30px 0; z-index: 100; border-right: 1px solid rgba(255,255,255,0.08); }
         .sidebar-top, .sidebar-bottom { display: flex; flex-direction: column; align-items: center; gap: 25px; }
         .sidebar a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #aaa; gap: 5px; transition: 0.2s; font-size: 12px; font-weight: 500; }
@@ -62,7 +63,7 @@
 <div class="sidebar">
     <div class="sidebar-top">
         <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="index.html#movies"><i class="fas fa-film"></i><span>Movies</span></a>
+        <a href="index.html"><i class="fas fa-film"></i><span>Movies</span></a>
         <a href="tvshows.html" class="active"><i class="fas fa-tv"></i><span>TV Shows</span></a>
         <a href="#"><i class="fas fa-heart"></i><span>Favorites</span></a>
     </div>
