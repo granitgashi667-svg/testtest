@@ -3,34 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlbFilms24 - Watch</title>
+    <title>Neon Watch</title>
     <style>
-        body { margin: 0; background: #0a0a0a; color: #fff; font-family: Arial, sans-serif; }
-        .container { max-width: 1000px; margin: auto; padding: 20px; text-align: center; }
-        iframe { width: 100%; height: 520px; border: none; border-radius: 12px; background: #000; }
-        .back { display: inline-block; margin-top: 20px; color: #e50914; text-decoration: none; }
-        h2 { margin-bottom: 10px; }
+        body { background: #000; color: #0ff; font-family: 'Courier New', monospace; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: auto; }
+        .back-btn { background: #111; border: 1px solid #0ff; color: #0ff; padding: 8px 20px; border-radius: 30px; cursor: pointer; margin-bottom: 20px; }
+        .movie-hero { display: flex; gap: 30px; margin-bottom: 30px; flex-wrap: wrap; background: #111; padding: 20px; border-radius: 20px; border-left: 5px solid #f0f; }
+        .poster img { width: 250px; border-radius: 16px; border: 2px solid #0ff; }
+        .details { flex: 1; }
+        .title { font-size: 36px; text-shadow: 0 0 5px #f0f; margin-bottom: 10px; }
+        .meta { display: flex; gap: 15px; margin-bottom: 15px; }
+        .overview { margin-bottom: 15px; color: #ccc; }
+        .cast { color: #0ff; }
+        .player-wrapper { margin-top: 20px; border: 2px solid #f0f; border-radius: 16px; overflow: hidden; }
+        iframe { width: 100%; height: 500px; border: none; }
+        @media (max-width:700px){ .poster img { width: 150px; } .title { font-size: 24px; } iframe { height: 250px; } }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2 id="title">Loading...</h2>
-    <iframe id="player" allowfullscreen allow="autoplay; fullscreen"></iframe>
-    <br><a href="javascript:history.back()" class="back">← Back to Home</a>
+    <button class="back-btn" onclick="history.back()">← Back</button>
+    <div class="movie-hero" id="info"></div>
+    <div class="player-wrapper"><iframe id="player" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
 </div>
 <script>
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(location.search);
     const id = params.get('id');
     const type = params.get('type') || 'movie';
-    if (id) {
+    const API_KEY = '7a98db423d6e3a5ee922a3e51a09d135';
+    const IMG = 'https://image.tmdb.org/t/p/w500';
+
+    async function loadDetails() {
+        if (!id) return;
+        const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}?api_key=${API_KEY}&language=en-US&append_to_response=credits`);
+        const data = await res.json();
+        const title = data.title || data.name;
+        const year = (data.release_date || data.first_air_date || '').split('-')[0] || 'N/A';
+        const rating = data.vote_average?.toFixed(1) || 'N/A';
+        const runtime = data.runtime ? `${data.runtime} min` : (data.number_of_episodes ? `${data.number_of_episodes} eps` : 'N/A');
+        const cast = data.credits?.cast?.slice(0, 5).map(c => c.name).join(', ') || 'N/A';
+        const poster = data.poster_path ? IMG + data.poster_path : '';
+        const overview = data.overview || 'No description.';
+        document.getElementById('info').innerHTML = `
+            <div class="poster"><img src="${poster}" alt="${title}"></div>
+            <div class="details">
+                <div class="title">${title}</div>
+                <div class="meta"><span>⭐ ${rating}</span><span>📅 ${year}</span><span>⏱️ ${runtime}</span></div>
+                <div class="overview">${overview}</div>
+                <div class="cast"><strong>Cast:</strong> ${cast}</div>
+            </div>
+        `;
         let embedUrl = '';
         if (type === 'movie') embedUrl = `https://vidsrcme.ru/embed/movie/${id}`;
-        else embedUrl = `https://vidsrcme.ru/embed/tv/${id}/1/1`; // default first episode for TV
+        else embedUrl = `https://vidsrcme.ru/embed/tv/${id}/1/1`;
         document.getElementById('player').src = embedUrl;
-        document.getElementById('title').innerText = type === 'movie' ? 'Now Playing' : 'TV Series (Episode 1)';
-    } else {
-        document.getElementById('title').innerText = 'Invalid ID';
     }
+    loadDetails();
 </script>
 </body>
 </html>
