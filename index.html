@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>AlbFilms24 - 2000+ Movies & 500+ Series</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; }
-        /* Sidebar - pa tekst, vetëm ikona */
+        
+        /* Sidebar - vetëm ikona */
         .sidebar {
             position: fixed; left: 0; top: 0; width: 80px; height: 100vh;
             background: rgba(10,10,15,0.96); backdrop-filter: blur(12px);
             display: flex; flex-direction: column; align-items: center;
-            justify-content: space-between; padding: 30px 0 30px 0;
+            justify-content: space-between; padding: 30px 0;
             z-index: 100; border-right: 1px solid rgba(255,255,255,0.08);
         }
         .sidebar-top { display: flex; flex-direction: column; align-items: center; gap: 30px; }
@@ -27,43 +28,141 @@
         }
         .sidebar a i { font-size: 24px; }
         .sidebar a:hover, .sidebar a.active { color: #e50914; transform: translateY(-3px); }
-        /* Main content - pa header */
+        
+        /* Main */
         .main { margin-left: 80px; padding: 20px 40px; max-width: calc(100% - 80px); }
-        /* Hero Slider - me lartësi më të madhe dhe search brenda */
+        
+        /* Hero Slider - me lartësi më të madhe */
         .hero-slider {
             position: relative;
             margin-bottom: 40px;
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5);
         }
         .swiper { width: 100%; height: 600px; }
         .swiper-slide { position: relative; }
         .slide-bg { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* Overlay i errët për të lexuar tekstit */
         .slide-overlay {
             position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+            background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 100%);
         }
-        /* Përmbajtja e sliderit (teksti i madh + kërkimi) */
+        
+        /* Dritarja e përshkrimit - e përmirësuar si karton */
+        .slide-description-card {
+            position: absolute;
+            left: 60px;
+            bottom: 60px;
+            max-width: 500px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 24px 28px;
+            border-radius: 24px;
+            border-left: 5px solid #e50914;
+            z-index: 15;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.4);
+        }
+        
+        .slide-description-card h2 {
+            font-size: 36px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .slide-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #ddd;
+        }
+        
+        .slide-meta span i { margin-right: 6px; }
+        .rating { color: #f5c518; font-weight: 600; }
+        
+        .slide-description-card p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            color: #ccc;
+            opacity: 0.95;
+        }
+        
+        .slide-cast {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        .slide-cast strong { color: #e50914; }
+        
+        /* Butoni i zgjeruar Watch Now */
+        .btn-watch {
+            background: #e50914;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(229,9,20,0.3);
+        }
+        
+        .btn-watch:hover {
+            background: #b81d24;
+            transform: scale(1.02);
+            box-shadow: 0 6px 16px rgba(229,9,20,0.4);
+        }
+        
+        /* Përmbajtja statike e sliderit (logo + search) */
         .slider-static-content {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            text-align: center; z-index: 20; width: 90%; max-width: 700px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 20;
+            width: 90%;
+            max-width: 700px;
+            pointer-events: none;
         }
         .slider-static-content h1 {
-            font-size: 64px; font-weight: 800;
+            font-size: 64px;
+            font-weight: 800;
             background: linear-gradient(135deg, #fff, #e50914);
-            -webkit-background-clip: text; background-clip: text;
-            color: transparent; letter-spacing: -1px; margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(0,0,0,0.3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(0,0,0,0.5);
+            pointer-events: none;
         }
-        .slider-search {
-            display: flex; justify-content: center; margin-top: 10px;
+        .slider-static-content .slider-search {
+            pointer-events: auto;
         }
         .slider-search input {
-            width: 80%; max-width: 500px; padding: 14px 24px;
-            border-radius: 60px; border: none; background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px); color: white; font-size: 16px;
-            outline: none; text-align: center;
+            width: 80%;
+            max-width: 500px;
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            text-align: center;
             border: 1px solid rgba(255,255,255,0.3);
             transition: 0.2s;
         }
@@ -71,16 +170,8 @@
             background: rgba(255,255,255,0.25);
             border-color: #e50914;
         }
-        /* Përmbajtja e slide-ve (përshkrimi i filmit) - e lëmë më poshtë */
-        .slide-content {
-            position: absolute; bottom: 40px; left: 50px;
-            max-width: 500px; z-index: 15;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
-            padding: 20px; border-radius: 16px;
-        }
-        .slide-content h2 { font-size: 32px; margin-bottom: 10px; }
-        .btn-watch { background: #e50914; border: none; padding: 8px 20px; border-radius: 40px; color: white; cursor: pointer; margin-top: 10px; }
-        /* Seksionet dhe grid - njësoj si më parë */
+        
+        /* Seksionet e filmave - njësoj */
         .section-header { display: flex; justify-content: space-between; align-items: baseline; margin: 40px 0 20px; flex-wrap: wrap; }
         .section-title { font-size: 24px; font-weight: 700; border-left: 4px solid #e50914; padding-left: 15px; }
         .pagination-controls { display: flex; gap: 8px; }
@@ -95,15 +186,20 @@
         .card-info { padding: 12px; }
         .card-info h4 { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-info p { font-size: 12px; color: #aaa; }
+        
+        /* Preview Hover */
         .preview-rich { position: absolute; width: 340px; background: #1a1c22; border-radius: 16px; overflow: hidden; z-index: 2000; border: 1px solid #e50914; }
         .preview-trailer iframe { width: 100%; height: 190px; border: none; }
         .preview-info { padding: 12px; }
+        
         /* Footer */
         .footer { margin-top: 60px; background: #0c0e12; border-radius: 30px 30px 0 0; padding: 40px 30px 20px; }
         .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 40px; }
         .footer-logo { font-size: 24px; font-weight: 800; background: linear-gradient(135deg,#fff,#e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .social-links a { margin-right: 15px; color: #ccc; text-decoration: none; }
         .disclaimer { font-size: 12px; color: #888; background: #1a1c22; padding: 12px; border-radius: 12px; margin-top: 15px; }
+        
+        /* Toast, Modal */
         .toast { position: fixed; bottom: 30px; right: 30px; background: #e50914; padding: 10px 20px; border-radius: 30px; opacity: 0; transition: 0.3s; z-index: 3500; }
         .toast.show { opacity: 1; }
         .modal { display: none; position: fixed; top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:3000;align-items:center;justify-content:center; }
@@ -116,7 +212,6 @@
 </head>
 <body>
 
-<!-- Sidebar i ri: vetëm ikona, pa tekst -->
 <div class="sidebar">
     <div class="sidebar-top">
         <a href="#" id="homeLink"><i class="fas fa-home"></i></a>
@@ -130,7 +225,6 @@
 </div>
 
 <div class="main">
-    <!-- Hero Slider me tekst "ALBFILMS24.COM", search bar dhe slideshow -->
     <div class="hero-slider">
         <div class="swiper heroSwiper">
             <div class="swiper-wrapper" id="heroSlider"></div>
@@ -138,7 +232,6 @@
             <div class="swiper-button-prev"></div>
             <div class="swiper-pagination"></div>
         </div>
-        <!-- Shtresa statike me logon dhe search bar brenda sliderit -->
         <div class="slider-static-content">
             <h1>ALBFILMS24.COM</h1>
             <div class="slider-search">
@@ -150,43 +243,30 @@
     <!-- 14 zhanre me filma (2000+) -->
     <div class="section-header"><h2 class="section-title"><i class="fas fa-bolt"></i> Action</h2><div class="pagination-controls" id="actionPagination"></div></div>
     <div class="movies-grid" id="actionGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-laugh"></i> Comedy</h2><div class="pagination-controls" id="comedyPagination"></div></div>
     <div class="movies-grid" id="comedyGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-theater-masks"></i> Drama</h2><div class="pagination-controls" id="dramaPagination"></div></div>
     <div class="movies-grid" id="dramaGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-skull"></i> Horror</h2><div class="pagination-controls" id="horrorPagination"></div></div>
     <div class="movies-grid" id="horrorGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-heart"></i> Romance</h2><div class="pagination-controls" id="romancePagination"></div></div>
     <div class="movies-grid" id="romanceGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-rocket"></i> Sci-Fi</h2><div class="pagination-controls" id="scifiPagination"></div></div>
     <div class="movies-grid" id="scifiGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-globe"></i> Documentary</h2><div class="pagination-controls" id="docPagination"></div></div>
     <div class="movies-grid" id="docGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-gavel"></i> Crime</h2><div class="pagination-controls" id="crimePagination"></div></div>
     <div class="movies-grid" id="crimeGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-map-marked-alt"></i> Adventure</h2><div class="pagination-controls" id="adventurePagination"></div></div>
     <div class="movies-grid" id="adventureGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-dragon"></i> Fantasy</h2><div class="pagination-controls" id="fantasyPagination"></div></div>
     <div class="movies-grid" id="fantasyGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-fist-raised"></i> War</h2><div class="pagination-controls" id="warPagination"></div></div>
     <div class="movies-grid" id="warGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-hat-cowboy"></i> Western</h2><div class="pagination-controls" id="westernPagination"></div></div>
     <div class="movies-grid" id="westernGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-music"></i> Music</h2><div class="pagination-controls" id="musicPagination"></div></div>
     <div class="movies-grid" id="musicGrid"></div>
-
     <div class="section-header"><h2 class="section-title"><i class="fas fa-landmark"></i> History</h2><div class="pagination-controls" id="historyPagination"></div></div>
     <div class="movies-grid" id="historyGrid"></div>
 
@@ -231,17 +311,14 @@
         const BASE = 'https://api.themoviedb.org/3';
         const IMG = 'https://image.tmdb.org/t/p/w500';
         const BACKDROP = 'https://image.tmdb.org/t/p/original';
-
         let swiper = null;
         let activePreview = null;
-
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
-
         async function showRichPreview(id, el, isTv) {
             if (activePreview) activePreview.remove();
             try {
@@ -269,7 +346,6 @@
                 if (parseInt(preview.style.left) + 360 > window.innerWidth) preview.style.left = rect.left - 370 + 'px';
             } catch(e) { console.error(e); }
         }
-
         function createCard(item, isTv, containerId) {
             const card = document.createElement('div');
             card.className = isTv ? 'tv-card' : 'movie-card';
@@ -286,7 +362,6 @@
             card.onclick = () => window.location.href = `watch.html?id=${item.id}&type=${isTv ? 'tv' : 'movie'}`;
             document.getElementById(containerId).appendChild(card);
         }
-
         async function loadGenreMovies(genreId, gridId, pagId, page = 1, genreName) {
             const grid = document.getElementById(gridId);
             if (!grid) return;
@@ -310,8 +385,15 @@
                 }
             } catch(e) { console.error(e); grid.innerHTML = '<div>Error</div>'; }
         }
-
-        const customTvIds = [1396,60573,1399,46530,1416,1402,4629,62074,48866,46298,44608,47061,20798,70646,456,72759,1405,1434,1398,1394,46285,94941,1488,1390,76479,44217,651,4614,1100,82856,76489,112733,2691,65338,1408,1397,1392,44130,172,1437,45625,2907,37854,46261,46742,600,217,556,73586,608,313,358,4600,76391,395,1420,1401,1477,1530,1406,1425,827,65782,46672,86834,505,1306,116,526,611,451,509,768,2236,225,620,90510,476,134,935,500,655,269,1871,244,622,670,690,713,714,715,716,717,718,719,720,721,722,723,724,334,164,21,438,459,839,840,841,842,843,844,845,846,847,848,849,850,851,852,853];
+        const customTvIds = [
+            1396,60573,1399,46530,1416,1402,4629,62074,48866,46298,44608,47061,20798,70646,456,72759,
+            1405,1434,1398,1394,46285,94941,1488,1390,76479,44217,651,4614,1100,82856,76489,112733,
+            2691,65338,1408,1397,1392,44130,172,1437,45625,2907,37854,46261,46742,600,217,556,73586,
+            608,313,358,4600,76391,395,1420,1401,1477,1530,1406,1425,827,65782,46672,86834,505,1306,
+            116,526,611,451,509,768,2236,225,620,90510,476,134,935,500,655,269,1871,244,622,670,690,
+            713,714,715,716,717,718,719,720,721,722,723,724,334,164,21,438,459,839,840,841,842,843,
+            844,845,846,847,848,849,850,851,852,853
+        ];
         let tvCurrentPage = 1, tvTotalPages = 5;
         async function loadTVShows(page = 1) {
             const grid = document.getElementById('tvSeriesGrid');
@@ -345,31 +427,48 @@
                 }
             } catch(e) { console.error(e); }
         }
-
         async function loadHeroSlider() {
             const res = await fetch(`${BASE}/movie/popular?api_key=${API_KEY}&language=en-US`);
             const data = await res.json();
             const slides = data.results.slice(0, 6);
             const wrapper = document.getElementById('heroSlider');
             wrapper.innerHTML = '';
-            slides.forEach(m => {
+            for (const m of slides) {
+                // merr detaje plotësuese për rating, cast
+                const [det, credit] = await Promise.all([
+                    fetch(`${BASE}/movie/${m.id}?api_key=${API_KEY}&language=en-US`).then(r=>r.json()),
+                    fetch(`${BASE}/movie/${m.id}/credits?api_key=${API_KEY}&language=en-US`).then(r=>r.json())
+                ]);
+                const rating = det.vote_average ? det.vote_average.toFixed(1) : 'N/A';
+                const castList = credit.cast ? credit.cast.slice(0,3).map(c=>c.name).join(', ') : 'N/A';
+                const overview = det.overview ? det.overview.substring(0,150) : 'No description';
                 const div = document.createElement('div');
                 div.className = 'swiper-slide';
                 div.innerHTML = `
                     <img class="slide-bg" src="${BACKDROP + m.backdrop_path}" alt="${m.title}">
                     <div class="slide-overlay"></div>
-                    <div class="slide-content">
+                    <div class="slide-description-card">
                         <h2>${m.title}</h2>
-                        <p>${(m.overview || '').substring(0,120)}...</p>
-                        <button class="btn-watch" onclick="location.href='watch.html?id=${m.id}&type=movie'">Watch Now</button>
+                        <div class="slide-meta">
+                            <span class="rating"><i class="fas fa-star"></i> ${rating}/10</span>
+                            <span><i class="fas fa-calendar-alt"></i> ${det.release_date?.split('-')[0] || 'N/A'}</span>
+                            <span><i class="fas fa-clock"></i> ${det.runtime || '?'} min</span>
+                        </div>
+                        <p>${overview}...</p>
+                        <div class="slide-cast"><i class="fas fa-users"></i> <strong>Cast:</strong> ${castList}</div>
+                        <button class="btn-watch" onclick="location.href='watch.html?id=${m.id}&type=movie'"><i class="fas fa-play"></i> Watch Now</button>
                     </div>
                 `;
                 wrapper.appendChild(div);
-            });
+            }
             if (swiper) swiper.destroy();
-            swiper = new Swiper('.heroSwiper', { loop: true, autoplay: { delay: 5500 }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, pagination: { el: '.swiper-pagination', clickable: true } });
+            swiper = new Swiper('.heroSwiper', {
+                loop: true,
+                autoplay: { delay: 6000, disableOnInteraction: false },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                pagination: { el: '.swiper-pagination', clickable: true }
+            });
         }
-
         async function searchContent(query) {
             if (!query || query.length < 2) { document.getElementById('searchResultsContainer').style.display = 'none'; return; }
             const res = await fetch(`${BASE}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=en-US`);
@@ -380,7 +479,6 @@
             results.forEach(item => createCard(item, item.media_type === 'tv', 'searchGrid'));
             document.getElementById('searchResultsContainer').style.display = results.length ? 'block' : 'none';
         }
-
         function initGenres() {
             const genres = [
                 { id:28, grid:'actionGrid', pag:'actionPagination' }, { id:35, grid:'comedyGrid', pag:'comedyPagination' },
@@ -393,19 +491,14 @@
             ];
             genres.forEach(g => loadGenreMovies(g.id, g.grid, g.pag, 1, g.grid));
         }
-
-        // Lidh eventet e kërkimit me search bar-in e sliderit
         document.getElementById('searchInputSlider').addEventListener('input', e => searchContent(e.target.value));
-        // Login nga sidebar
         document.getElementById('userIconSidebar').onclick = () => document.getElementById('authModal').style.display = 'flex';
         document.querySelector('.close-modal').onclick = () => document.getElementById('authModal').style.display = 'none';
         document.getElementById('demoLoginBtn').onclick = () => { showToast('Demo login'); document.getElementById('authModal').style.display = 'none'; };
-        // Funksionaliteti i sidebar-it
         document.getElementById('homeLink')?.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
         document.getElementById('moviesLink')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('actionGrid').scrollIntoView({ behavior: 'smooth' }); });
         document.getElementById('tvLink')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('tvSeriesGrid').scrollIntoView({ behavior: 'smooth' }); });
         document.getElementById('favoritesLink')?.addEventListener('click', (e) => { e.preventDefault(); showToast('Login to see favorites'); });
-
         loadHeroSlider();
         initGenres();
         loadTVShows(1);
