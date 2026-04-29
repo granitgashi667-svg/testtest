@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlbFilms24 - Minimal Dark</title>
+    <title>AlbFilms24 - Varianti 1 (Minimal Dark)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        /* ========== VARIANT 1: Minimalist & Dark ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #0a0a0a; color: #fff; font-family: 'Inter', sans-serif; }
-        /* Sidebar - no AF logo, functional icons with dropdown */
+        body { background: #0a0a0a; color: #fff; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+        /* Sidebar - no AF logo, functional icons with genre dropdown */
         .sidebar {
             position: fixed; left: 0; top: 0; width: 70px; height: 100vh;
             background: #111; display: flex; flex-direction: column; align-items: center;
@@ -18,39 +18,41 @@
         }
         .sidebar i { font-size: 24px; color: #aaa; cursor: pointer; transition: 0.2s; }
         .sidebar i:hover { color: #e50914; }
-        /* Genre dropdown on click (simple alert for demo, can be expanded) */
         .sidebar .genre-dropdown { position: relative; }
         .sidebar .genre-menu {
             position: absolute; left: 70px; top: 0; background: #1e1e2a;
-            border-radius: 12px; padding: 10px; display: none; flex-direction: column;
-            white-space: nowrap; z-index: 200;
+            border-radius: 12px; padding: 8px 0; display: none; flex-direction: column;
+            white-space: nowrap; z-index: 200; min-width: 120px;
         }
         .sidebar .genre-dropdown:hover .genre-menu { display: flex; }
-        .sidebar .genre-menu a { color: white; padding: 5px 10px; text-decoration: none; font-size: 12px; }
-        .sidebar .genre-menu a:hover { background: #e50914; border-radius: 6px; }
+        .sidebar .genre-menu a { color: white; padding: 6px 15px; text-decoration: none; font-size: 13px; }
+        .sidebar .genre-menu a:hover { background: #e50914; }
 
         .main { margin-left: 70px; padding: 20px 30px; }
-        /* Header no brand text, just search bar */
-        .header { display: flex; justify-content: flex-end; margin-bottom: 20px; }
-        #searchInput { padding: 10px 20px; border-radius: 40px; border: none; background: #1e1e2a; color: white; width: 280px; }
-        #userIcon { font-size: 28px; margin-left: 15px; cursor: pointer; }
 
-        /* Hero Slider - only movie images, no text overlay */
+        /* Header - only search and user icon */
+        .header { display: flex; justify-content: flex-end; align-items: center; gap: 15px; margin-bottom: 20px; }
+        #searchInput { padding: 10px 20px; border-radius: 40px; border: none; background: #1e1e2a; color: white; width: 260px; }
+        #searchInput:focus { outline: none; background: #2a2a35; }
+        #userIcon { font-size: 28px; cursor: pointer; }
+
+        /* Hero Slider - only images, no text overlay */
         .hero-slider { margin-bottom: 40px; border-radius: 16px; overflow: hidden; }
         .swiper { width: 100%; height: 450px; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .swiper-button-next, .swiper-button-prev { color: white; background: rgba(0,0,0,0.5); width: 40px; height: 40px; border-radius: 50%; }
+        .swiper-pagination-bullet { background: white; }
 
         /* Section title */
         .section-title { font-size: 1.8rem; margin: 30px 0 20px; font-weight: 600; border-left: 4px solid #e50914; padding-left: 15px; }
 
-        /* Grid with 8 items per row on large screens */
+        /* Grid - 8 columns on large screens */
         .movies-grid, .tv-grid {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
             gap: 16px;
             margin-bottom: 30px;
         }
-        /* Responsive: fallback to fewer columns on smaller screens */
         @media (max-width: 1400px) { .movies-grid, .tv-grid { grid-template-columns: repeat(6, 1fr); } }
         @media (max-width: 1000px) { .movies-grid, .tv-grid { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 600px) { .movies-grid, .tv-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -60,112 +62,275 @@
             background: #141414; border-radius: 12px; overflow: hidden;
             transition: transform 0.2s; cursor: pointer; position: relative;
         }
-        .movie-card:hover, .tv-card:hover { transform: scale(1.02); }
+        .movie-card:hover, .tv-card:hover { transform: translateY(-5px); }
         .poster { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
-        .card-icons { position: absolute; top: 8px; right: 8px; display: flex; gap: 8px; background: rgba(0,0,0,0.6); padding: 4px 6px; border-radius: 20px; }
-        .card-icons i { font-size: 12px; cursor: pointer; }
+        .card-icons {
+            position: absolute; top: 6px; right: 6px; display: flex; gap: 6px;
+            background: rgba(0,0,0,0.6); padding: 4px 6px; border-radius: 20px; z-index: 2;
+        }
+        .card-icons i { font-size: 12px; cursor: pointer; color: #ccc; }
+        .card-icons i:hover { color: #e50914; }
         .card-info { padding: 8px; }
-        .card-info h4 { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-info h4 { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-info p { font-size: 11px; color: #aaa; }
 
-        /* Pagination */
-        .pagination {
-            display: flex; justify-content: center; gap: 12px; margin: 20px 0 40px;
-        }
-        .page-btn {
-            background: #1e1e2a; border: none; padding: 8px 14px; border-radius: 30px;
-            color: white; cursor: pointer; transition: 0.2s;
-        }
+        /* Pagination (simple) */
+        .pagination { display: flex; justify-content: center; gap: 12px; margin: 20px 0 40px; }
+        .page-btn { background: #1e1e2a; border: none; padding: 6px 14px; border-radius: 30px; color: white; cursor: pointer; }
         .page-btn.active { background: #e50914; }
         .page-btn:hover { background: #333; }
 
-        /* Modal, panel, toast same as before (keep functionality) */
+        /* Search results container */
+        #searchResultsContainer { display: none; margin-top: 30px; }
+
+        /* Simple modal for login (minimal, just for demo) */
         .modal { display: none; position: fixed; top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:3000;align-items:center;justify-content:center; }
         .modal-content { background:#1e1e2a; max-width:400px; width:90%; border-radius:24px; padding:20px; }
         .close-modal { float:right; font-size:28px; cursor:pointer; }
-        .auth-tabs { display:flex; gap:15px; margin:15px 0; }
-        .tab-btn { background:none; border:none; color:#ccc; padding:5px; cursor:pointer; }
-        .tab-btn.active { color:#e50914; border-bottom:2px solid #e50914; }
-        .auth-form { display:none; flex-direction:column; gap:12px; }
-        .auth-form.active { display:flex; }
-        .auth-form input { padding:10px; border-radius:30px; border:none; background:#2a2a35; color:white; }
-        .btn-google { background:white; color:black; padding:10px; border-radius:30px; cursor:pointer; }
-        .user-panel { position:fixed; top:80px; right:20px; width:300px; background:#141414; border-radius:16px; padding:15px; z-index:1500; border:1px solid #333; display:none; }
-        .panel-points { background:#222; padding:10px; border-radius:12px; margin-bottom:10px; }
-        .btn-small { background:#e50914; border:none; color:white; padding:4px 12px; border-radius:20px; cursor:pointer; }
-        .toast { position:fixed; bottom:30px; right:30px; background:#e50914; padding:12px 20px; border-radius:40px; z-index:3500; opacity:0; transition:0.3s; }
+        .auth-tabs button { background:none; border:none; color:white; margin-right:15px; cursor:pointer; }
+        .auth-form { display:flex; flex-direction:column; gap:10px; margin-top:15px; }
+        .auth-form input { padding:8px; border-radius:30px; border:none; background:#2a2a35; color:white; }
+        .btn-primary { background:#e50914; border:none; padding:8px; border-radius:30px; color:white; cursor:pointer; }
+        .toast { position:fixed; bottom:30px; right:30px; background:#e50914; padding:10px 20px; border-radius:40px; z-index:3500; opacity:0; transition:0.3s; }
         .toast.show { opacity:1; }
-        .preview-rich { /* same as original, omitted for brevity but include */ }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="genre-dropdown">
-            <i class="fas fa-th-large"></i>
-            <div class="genre-menu" id="genreSidebarMenu">
-                <a href="#" data-genre="28">Action</a>
-                <a href="#" data-genre="35">Comedy</a>
-                <a href="#" data-genre="18">Drama</a>
-                <a href="#" data-genre="27">Horror</a>
-                <a href="#" data-genre="878">Sci-Fi</a>
-                <a href="#" data-genre="10749">Romance</a>
-                <a href="#" data-genre="99">Documentary</a>
-            </div>
+
+<div class="sidebar">
+    <div class="genre-dropdown">
+        <i class="fas fa-th-large"></i>
+        <div class="genre-menu">
+            <a href="#" data-genre="28">Action</a>
+            <a href="#" data-genre="35">Comedy</a>
+            <a href="#" data-genre="18">Drama</a>
+            <a href="#" data-genre="27">Horror</a>
+            <a href="#" data-genre="878">Sci-Fi</a>
+            <a href="#" data-genre="10749">Romance</a>
+            <a href="#" data-genre="99">Documentary</a>
         </div>
-        <i class="fas fa-home"></i>
-        <i class="fas fa-film"></i>
-        <i class="fas fa-tv"></i>
-        <i class="fas fa-heart"></i>
+    </div>
+    <i class="fas fa-home"></i>
+    <i class="fas fa-film"></i>
+    <i class="fas fa-tv"></i>
+    <i class="fas fa-heart"></i>
+</div>
+
+<div class="main">
+    <div class="header">
+        <input type="text" id="searchInput" placeholder="Search movies, TV series...">
+        <i id="userIcon" class="fas fa-user-circle"></i>
     </div>
 
-    <div class="main">
-        <div class="header">
-            <div><input type="text" id="searchInput" placeholder="Search movies, TV series..."></div>
-            <i id="userIcon" class="fas fa-user-circle"></i>
-        </div>
-
-        <!-- Hero Slider (only images) -->
-        <div class="hero-slider">
-            <div class="swiper heroSwiper">
-                <div class="swiper-wrapper" id="heroSlider"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-
-        <h2 class="section-title">🔥 Top Trending Movies</h2>
-        <div class="movies-grid" id="trendingGrid"></div>
-        <div class="pagination" id="moviePagination"></div>
-
-        <h2 class="section-title">📺 Top Trending TV Shows</h2>
-        <div class="tv-grid" id="tvGrid"></div>
-        <div class="pagination" id="tvPagination"></div>
-
-        <div id="searchResultsContainer" style="display:none;">
-            <h2 class="section-title">🔍 Search Results</h2>
-            <div class="movies-grid" id="searchGrid"></div>
+    <!-- Hero Slider (only images) -->
+    <div class="hero-slider">
+        <div class="swiper heroSwiper">
+            <div class="swiper-wrapper" id="heroSlider"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
         </div>
     </div>
 
-    <!-- Modals and user panel (same as original) -->
-    <div id="authModal" class="modal">...</div>
-    <div id="userPanel" class="user-panel">...</div>
-    <div id="toast" class="toast"></div>
+    <h2 class="section-title">🔥 Top Trending Movies</h2>
+    <div class="movies-grid" id="trendingGrid"></div>
+    <div class="pagination" id="moviePagination"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script type="module">
-        // ==================== FULL FUNCTIONAL CODE (SAME AS ORIGINAL) ====================
-        // Copy your existing complete logic from previous working index.html
-        // For brevity, I'm referencing that you will paste the full working script here.
-        // But to save space, I'll provide a condensed version that works identically.
-        // Since you already have a fully functional script from the previous step, simply replace the visual part.
-        // To make this answer complete, I'll assume you copy the entire script from your current working index.html
-        // and paste it here. The only changes are the CSS and HTML structure above.
-        // For demonstration, I'm including a placeholder. In real implementation, you will merge.
-        console.log("Variant 1 loaded - paste your full logic here");
-        // IMPORTANT: You must copy the entire script from your previous index.html (with Firebase, TMDB, etc.)
-        // into this section. This ensures all features work.
-    </script>
+    <h2 class="section-title">📺 Top Trending TV Shows</h2>
+    <div class="tv-grid" id="tvGrid"></div>
+    <div class="pagination" id="tvPagination"></div>
+
+    <div id="searchResultsContainer">
+        <h2 class="section-title">🔍 Search Results</h2>
+        <div class="movies-grid" id="searchGrid"></div>
+    </div>
+</div>
+
+<!-- Simple Login Modal (demo) -->
+<div id="authModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="auth-tabs">
+            <button class="tab-btn active" data-tab="login">Login</button>
+            <button class="tab-btn" data-tab="register">Register</button>
+        </div>
+        <div id="loginForm" class="auth-form active">
+            <input type="email" placeholder="Email" id="demoEmail">
+            <input type="password" placeholder="Password" id="demoPass">
+            <button class="btn-primary" id="demoLoginBtn">Sign In</button>
+        </div>
+        <div id="registerForm" class="auth-form">
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <button class="btn-primary">Create Account</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // ============ TMDB CONFIG ============
+    const API_KEY = '7a98db423d6e3a5ee922a3e51a09d135';
+    const BASE_URL = 'https://api.themoviedb.org/3';
+    const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+    const BACKDROP_URL = 'https://image.tmdb.org/t/p/original';
+
+    let currentPageMovies = 1;
+    let currentPageTV = 1;
+    let totalPagesMovies = 1;
+    let totalPagesTV = 1;
+    let swiper;
+
+    // Helper toast
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // Create movie/tv card
+    function createCard(item, isTv = false, containerId) {
+        const card = document.createElement('div');
+        card.className = isTv ? 'tv-card' : 'movie-card';
+        const title = item.title || item.name;
+        const year = (item.release_date || item.first_air_date || '').split('-')[0] || 'N/A';
+        const rating = item.vote_average ? item.vote_average.toFixed(1) : 'N/A';
+        card.innerHTML = `
+            <div class="card-icons">
+                <i class="far fa-heart"></i>
+                <i class="far fa-clock"></i>
+            </div>
+            <img class="poster" src="${item.poster_path ? IMG_URL+item.poster_path : 'https://via.placeholder.com/300x450?text=No+Image'}" alt="${title}">
+            <div class="card-info">
+                <h4>${title}</h4>
+                <p>${year} ⭐ ${rating}</p>
+            </div>
+        `;
+        card.addEventListener('click', () => {
+            if (isTv) window.location.href = `tv.html?id=${item.id}`;
+            else window.location.href = `watch.html?id=${item.id}`;
+        });
+        document.getElementById(containerId).appendChild(card);
+    }
+
+    // Load movies (top rated / trending)
+    async function loadMovies(page = 1) {
+        const grid = document.getElementById('trendingGrid');
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center;">Loading...</div>';
+        try {
+            const res = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=en-US&page=${page}`);
+            const data = await res.json();
+            totalPagesMovies = Math.min(data.total_pages, 10);
+            grid.innerHTML = '';
+            data.results.forEach(movie => createCard(movie, false, 'trendingGrid'));
+            renderPagination('movie', page);
+        } catch(e) { grid.innerHTML = '<div style="grid-column:1/-1;">Error loading movies</div>'; }
+    }
+
+    // Load TV shows (trending)
+    async function loadTVShows(page = 1) {
+        const grid = document.getElementById('tvGrid');
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center;">Loading...</div>';
+        try {
+            const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&language=en-US&page=${page}`);
+            const data = await res.json();
+            totalPagesTV = Math.min(data.total_pages, 10);
+            grid.innerHTML = '';
+            data.results.forEach(show => createCard(show, true, 'tvGrid'));
+            renderPagination('tv', page);
+        } catch(e) { grid.innerHTML = '<div style="grid-column:1/-1;">Error loading TV shows</div>'; }
+    }
+
+    // Render pagination buttons
+    function renderPagination(type, current) {
+        const container = document.getElementById(type === 'movie' ? 'moviePagination' : 'tvPagination');
+        const total = type === 'movie' ? totalPagesMovies : totalPagesTV;
+        if (!container) return;
+        container.innerHTML = '';
+        for (let i = 1; i <= Math.min(total, 8); i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            btn.className = `page-btn ${i === current ? 'active' : ''}`;
+            btn.onclick = () => {
+                if (type === 'movie') { currentPageMovies = i; loadMovies(i); }
+                else { currentPageTV = i; loadTVShows(i); }
+            };
+            container.appendChild(btn);
+        }
+    }
+
+    // Hero Slider (4 movies)
+    async function loadHeroSlider() {
+        const res = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=en-US`);
+        const data = await res.json();
+        const slides = data.results.slice(0, 4);
+        const wrapper = document.getElementById('heroSlider');
+        wrapper.innerHTML = '';
+        slides.forEach(m => {
+            const div = document.createElement('div');
+            div.className = 'swiper-slide';
+            div.innerHTML = `<img src="${BACKDROP_URL + m.backdrop_path}" alt="${m.title}">`;
+            wrapper.appendChild(div);
+        });
+        if (swiper) swiper.destroy();
+        swiper = new Swiper('.heroSwiper', {
+            loop: true, autoplay: { delay: 5000 },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            pagination: { el: '.swiper-pagination', clickable: true }
+        });
+    }
+
+    // Search (movies + tv)
+    async function searchContent(query) {
+        if (!query || query.length < 2) {
+            document.getElementById('searchResultsContainer').style.display = 'none';
+            return;
+        }
+        const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=en-US`);
+        const data = await res.json();
+        const results = data.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv').slice(0, 24);
+        const grid = document.getElementById('searchGrid');
+        grid.innerHTML = '';
+        results.forEach(item => {
+            const isTv = item.media_type === 'tv';
+            createCard(item, isTv, 'searchGrid');
+        });
+        document.getElementById('searchResultsContainer').style.display = results.length ? 'block' : 'none';
+    }
+
+    // Genre filter: reload movies grid with selected genre
+    async function loadGenre(genreId) {
+        const grid = document.getElementById('trendingGrid');
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center;">Loading...</div>';
+        const res = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc&language=en-US`);
+        const data = await res.json();
+        grid.innerHTML = '';
+        data.results.slice(0, 24).forEach(movie => createCard(movie, false, 'trendingGrid'));
+        showToast(`Showing genre movies`);
+        // reset pagination for this filtered view
+        document.getElementById('moviePagination').innerHTML = '';
+    }
+
+    // Event listeners
+    document.getElementById('searchInput').addEventListener('input', (e) => searchContent(e.target.value));
+    document.getElementById('userIcon').onclick = () => document.getElementById('authModal').style.display = 'flex';
+    document.querySelector('.close-modal').onclick = () => document.getElementById('authModal').style.display = 'none';
+    document.getElementById('demoLoginBtn').onclick = () => { showToast('Demo login (no backend)'); document.getElementById('authModal').style.display = 'none'; };
+    document.querySelectorAll('.genre-menu a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const genreId = link.dataset.genre;
+            if (genreId) loadGenre(genreId);
+        });
+    });
+
+    // Initial load
+    loadHeroSlider();
+    loadMovies(1);
+    loadTVShows(1);
+</script>
 </body>
 </html>
