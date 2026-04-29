@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
+        /* Të gjitha stilet ekzistuese – ruhen */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; }
-        
-        /* Sidebar me tekst */
         .sidebar {
             position: fixed; left: 0; top: 0; width: 80px; height: 100vh;
             background: rgba(10,10,15,0.96); backdrop-filter: blur(12px);
@@ -32,7 +31,7 @@
         
         .main { margin-left: 80px; padding: 20px 40px; max-width: calc(100% - 80px); }
         
-        /* Hero Slider - më elegant */
+        /* Hero Slider */
         .hero-slider {
             position: relative;
             margin-bottom: 40px;
@@ -65,7 +64,6 @@
             background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
         }
         
-        /* Kartela e përshkrimit e përmirësuar */
         .slide-description-card {
             position: absolute;
             left: 60px;
@@ -83,14 +81,8 @@
             animation: fadeInUp 0.5s ease-out;
         }
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .slide-description-card h2 {
             font-size: 38px;
@@ -117,7 +109,6 @@
             line-height: 1.5;
             margin-bottom: 18px;
             color: #e0e0e0;
-            opacity: 0.95;
         }
         .slide-cast {
             font-size: 13px;
@@ -143,10 +134,8 @@
         .btn-watch:hover {
             background: #b81d24;
             transform: scale(1.02);
-            box-shadow: 0 6px 18px rgba(229,9,20,0.5);
         }
         
-        /* Përmbajtja statike e sliderit (logo + search) */
         .slider-static-content {
             position: absolute;
             top: 50%;
@@ -167,7 +156,6 @@
             color: transparent;
             letter-spacing: -1px;
             margin-bottom: 20px;
-            text-shadow: 0 0 30px rgba(0,0,0,0.5);
             pointer-events: none;
         }
         .slider-static-content .slider-search {
@@ -193,7 +181,7 @@
             border-color: #e50914;
         }
         
-        /* Pjesa tjetër e stileve (seksionet, grid, etj.) – e njëjtë */
+        /* Seksionet e filmave */
         .section-header { display: flex; justify-content: space-between; align-items: baseline; margin: 40px 0 20px; flex-wrap: wrap; }
         .section-title { font-size: 24px; font-weight: 700; border-left: 4px solid #e50914; padding-left: 15px; }
         .pagination-controls { display: flex; gap: 8px; }
@@ -208,17 +196,14 @@
         .card-info { padding: 12px; }
         .card-info h4 { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-info p { font-size: 12px; color: #aaa; }
-        
         .preview-rich { position: absolute; width: 340px; background: #1a1c22; border-radius: 16px; overflow: hidden; z-index: 2000; border: 1px solid #e50914; }
         .preview-trailer iframe { width: 100%; height: 190px; border: none; }
         .preview-info { padding: 12px; }
-        
         .footer { margin-top: 60px; background: #0c0e12; border-radius: 30px 30px 0 0; padding: 40px 30px 20px; }
         .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 40px; }
         .footer-logo { font-size: 24px; font-weight: 800; background: linear-gradient(135deg,#fff,#e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .social-links a { margin-right: 15px; color: #ccc; text-decoration: none; }
         .disclaimer { font-size: 12px; color: #888; background: #1a1c22; padding: 12px; border-radius: 12px; margin-top: 15px; }
-        
         .toast { position: fixed; bottom: 30px; right: 30px; background: #e50914; padding: 10px 20px; border-radius: 30px; opacity: 0; transition: 0.3s; z-index: 3500; }
         .toast.show { opacity: 1; }
         .modal { display: none; position: fixed; top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:3000;align-items:center;justify-content:center; }
@@ -259,7 +244,13 @@
         </div>
     </div>
 
-    <!-- 14 zhanre me filma (2000+) -->
+    <!-- Këtu shfaqen rezultatet e kërkimit -->
+    <div id="searchResultsContainer" style="display:none;">
+        <div class="section-header"><h2 class="section-title"><i class="fas fa-search"></i> Search Results</h2></div>
+        <div class="movies-grid" id="searchGrid"></div>
+    </div>
+
+    <!-- 14 zhanre me filma -->
     <div class="section-header"><h2 class="section-title"><i class="fas fa-bolt"></i> Action</h2><div class="pagination-controls" id="actionPagination"></div></div>
     <div class="movies-grid" id="actionGrid"></div>
     <div class="section-header"><h2 class="section-title"><i class="fas fa-laugh"></i> Comedy</h2><div class="pagination-controls" id="comedyPagination"></div></div>
@@ -289,14 +280,9 @@
     <div class="section-header"><h2 class="section-title"><i class="fas fa-landmark"></i> History</h2><div class="pagination-controls" id="historyPagination"></div></div>
     <div class="movies-grid" id="historyGrid"></div>
 
-    <!-- TV Series (Featured) -->
+    <!-- Featured TV Series -->
     <div class="section-header"><h2 class="section-title"><i class="fas fa-crown"></i> Featured TV Series</h2><div class="pagination-controls" id="tvPagination"></div></div>
     <div class="tv-grid" id="tvSeriesGrid"></div>
-
-    <div id="searchResultsContainer" style="display:none;">
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-search"></i> Search Results</h2></div>
-        <div class="movies-grid" id="searchGrid"></div>
-    </div>
 
     <footer class="footer">
         <div class="footer-content">
@@ -320,7 +306,6 @@
 <div id="authModal" class="modal">
     <div class="modal-content"><span class="close-modal">&times;</span><div class="auth-form"><input type="email" id="demoEmail" placeholder="Email"><input type="password" id="demoPass" placeholder="Password"><button class="btn-primary" id="demoLoginBtn">Sign In (Demo)</button></div></div>
 </div>
-<div id="userPanel" class="user-panel" style="display:none;">...</div>
 <div id="toast" class="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -332,12 +317,14 @@
         const BACKDROP = 'https://image.tmdb.org/t/p/original';
         let swiper = null;
         let activePreview = null;
+
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
+
         async function showRichPreview(id, el, isTv) {
             if (activePreview) activePreview.remove();
             try {
@@ -365,6 +352,7 @@
                 if (parseInt(preview.style.left) + 360 > window.innerWidth) preview.style.left = rect.left - 370 + 'px';
             } catch(e) { console.error(e); }
         }
+
         function createCard(item, isTv, containerId) {
             const card = document.createElement('div');
             card.className = isTv ? 'tv-card' : 'movie-card';
@@ -384,7 +372,8 @@
             };
             document.getElementById(containerId).appendChild(card);
         }
-        async function loadGenreMovies(genreId, gridId, pagId, page = 1, genreName) {
+
+        async function loadGenreMovies(genreId, gridId, pagId, page = 1) {
             const grid = document.getElementById(gridId);
             if (!grid) return;
             if (page === 1) grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Loading...</div>';
@@ -401,12 +390,13 @@
                         const btn = document.createElement('button');
                         btn.textContent = i;
                         btn.className = `page-btn ${i === page ? 'active' : ''}`;
-                        btn.onclick = () => { grid.innerHTML = ''; loadGenreMovies(genreId, gridId, pagId, i, genreName); };
+                        btn.onclick = () => { grid.innerHTML = ''; loadGenreMovies(genreId, gridId, pagId, i); };
                         pagContainer.appendChild(btn);
                     }
                 }
             } catch(e) { console.error(e); grid.innerHTML = '<div>Error</div>'; }
         }
+
         const customTvIds = [
             1396,60573,1399,46530,1416,1402,4629,62074,48866,46298,44608,47061,20798,70646,456,72759,
             1405,1434,1398,1394,46285,94941,1488,1390,76479,44217,651,4614,1100,82856,76489,112733,
@@ -449,10 +439,8 @@
                 }
             } catch(e) { console.error(e); }
         }
-        
-        // Slider i ri: përdor trending/movie/day (ndryshon çdo 24 orë)
+
         async function loadHeroSlider() {
-            // Përdor trending/day për filmat më të shikuar të ditës (ndryshon çdo 24h)
             const res = await fetch(`${BASE}/trending/movie/day?api_key=${API_KEY}&language=en-US`);
             const data = await res.json();
             const slides = data.results.slice(0, 6);
@@ -491,24 +479,37 @@
                 autoplay: { delay: 6000, disableOnInteraction: false },
                 navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
                 pagination: { el: '.swiper-pagination', clickable: true },
-                effect: 'slide',
                 speed: 800
             });
         }
-        
+
+        // Funksioni i kërkimit (për filma dhe seriale) - aktivizohet me 3 shkronja
         async function searchContent(query) {
+            const container = document.getElementById('searchResultsContainer');
+            const grid = document.getElementById('searchGrid');
             if (!query || query.length < 3) {
-                document.getElementById('searchResultsContainer').style.display = 'none';
+                container.style.display = 'none';
                 return;
             }
-            const res = await fetch(`${BASE}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=en-US`);
-            const data = await res.json();
-            const results = data.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv').slice(0, 24);
-            const grid = document.getElementById('searchGrid');
-            grid.innerHTML = '';
-            results.forEach(item => createCard(item, item.media_type === 'tv', 'searchGrid'));
-            document.getElementById('searchResultsContainer').style.display = results.length ? 'block' : 'none';
+            try {
+                const res = await fetch(`${BASE}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=en-US`);
+                const data = await res.json();
+                const results = data.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv').slice(0, 24);
+                grid.innerHTML = '';
+                if (results.length === 0) {
+                    grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px;">No results found.</div>';
+                    container.style.display = 'block';
+                    return;
+                }
+                results.forEach(item => createCard(item, item.media_type === 'tv', 'searchGrid'));
+                container.style.display = 'block';
+            } catch (error) {
+                console.error('Search error:', error);
+                grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px;">Search failed. Please try again.</div>';
+                container.style.display = 'block';
+            }
         }
+
         function initGenres() {
             const genres = [
                 { id:28, grid:'actionGrid', pag:'actionPagination' }, { id:35, grid:'comedyGrid', pag:'comedyPagination' },
@@ -519,15 +520,22 @@
                 { id:10752, grid:'warGrid', pag:'warPagination' }, { id:37, grid:'westernGrid', pag:'westernPagination' },
                 { id:10402, grid:'musicGrid', pag:'musicPagination' }, { id:36, grid:'historyGrid', pag:'historyPagination' }
             ];
-            genres.forEach(g => loadGenreMovies(g.id, g.grid, g.pag, 1, g.grid));
+            genres.forEach(g => loadGenreMovies(g.id, g.grid, g.pag, 1));
         }
-        document.getElementById('searchInputSlider').addEventListener('input', e => searchContent(e.target.value));
+
+        // Event listeners
+        const searchInput = document.getElementById('searchInputSlider');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => searchContent(e.target.value));
+        }
+
         document.getElementById('userIconSidebar').onclick = () => document.getElementById('authModal').style.display = 'flex';
         document.querySelector('.close-modal').onclick = () => document.getElementById('authModal').style.display = 'none';
         document.getElementById('demoLoginBtn').onclick = () => { showToast('Demo login'); document.getElementById('authModal').style.display = 'none'; };
         document.getElementById('homeLink')?.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
         document.getElementById('moviesLink')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('actionGrid').scrollIntoView({ behavior: 'smooth' }); });
         document.getElementById('favoritesLink')?.addEventListener('click', (e) => { e.preventDefault(); showToast('Login to see favorites'); });
+
         loadHeroSlider();
         initGenres();
         loadTVShows(1);
