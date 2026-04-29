@@ -4,36 +4,153 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>AlbFilms24 - 2000+ Movies & 500+ Series</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; }
         
+        /* ========== LOGO E RE KINEMATOGRAFIKE ========== */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo-icon {
+            position: relative;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #000000, #2a0000);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(229,9,20,0.3);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%);
+            transform: rotate(25deg);
+            animation: glossMove 6s infinite;
+        }
+        @keyframes glossMove {
+            0% { transform: translate(-30%, -30%) rotate(25deg); opacity: 0; }
+            50% { transform: translate(0%, 0%) rotate(25deg); opacity: 0.6; }
+            100% { transform: translate(30%, 30%) rotate(25deg); opacity: 0; }
+        }
+        .film-reel {
+            width: 40px;
+            height: 40px;
+            background: repeating-radial-gradient(circle at 50% 50%, #e50914 0px, #e50914 4px, #000 4px, #000 8px);
+            border-radius: 50%;
+            position: relative;
+            animation: spinSlow 8s linear infinite;
+        }
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .reel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: #000;
+            border-radius: 50%;
+            border: 1px solid #e50914;
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+        .logo-text .top {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #fff, #e50914);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo-text .bottom {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 800;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+        .bottom .albfilms {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 600;
+            background: linear-gradient(135deg, #e50914, #ff6600);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 26px;
+        }
+        .bottom .num24 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            color: #FFD700;
+            text-shadow: 0 0 5px #e50914;
+            animation: pulseNeon 1.5s ease-in-out infinite;
+            position: relative;
+        }
+        @keyframes pulseNeon {
+            0%, 100% { text-shadow: 0 0 2px #e50914, 0 0 5px #e50914; }
+            50% { text-shadow: 0 0 8px #e50914, 0 0 12px #e50914; }
+        }
+        .clapper {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #e50914;
+            margin-left: 5px;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 60% 100%, 0% 80%);
+            vertical-align: middle;
+            animation: clap 1s infinite;
+        }
+        @keyframes clap {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.9); opacity: 0.7; }
+        }
+        
         /* Sidebar me tekst */
         .sidebar {
-            position: fixed; left: 0; top: 0; width: 110px; height: 100vh;
+            position: fixed; left: 0; top: 0; width: 120px; height: 100vh;
             background: rgba(10,10,15,0.96); backdrop-filter: blur(12px);
             display: flex; flex-direction: column;
             justify-content: space-between; padding: 30px 0 30px 0;
             z-index: 100; border-right: 1px solid rgba(255,255,255,0.08);
         }
-        .sidebar-top {
-            display: flex; flex-direction: column; align-items: center; gap: 25px;
-        }
-        .sidebar-bottom {
+        .sidebar-top, .sidebar-bottom {
             display: flex; flex-direction: column; align-items: center; gap: 25px;
         }
         .sidebar a {
             display: flex; flex-direction: column; align-items: center;
             text-decoration: none; color: #aaa; gap: 5px;
-            transition: 0.2s; font-size: 11px; font-weight: 500;
+            transition: 0.2s; font-size: 12px; font-weight: 500;
         }
         .sidebar a i { font-size: 22px; }
         .sidebar a:hover, .sidebar a.active { color: #e50914; transform: translateY(-3px); }
         
-        .main { margin-left: 110px; padding: 20px 40px; max-width: calc(100% - 110px); }
+        .main { margin-left: 120px; padding: 20px 40px; max-width: calc(100% - 120px); }
         
         /* Hero Slider */
         .hero-slider { position: relative; margin-bottom: 40px; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5); }
@@ -41,46 +158,33 @@
         .swiper-slide { position: relative; }
         .slide-bg { width: 100%; height: 100%; object-fit: cover; }
         .slide-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 100%); }
-        
         .slide-description-card {
             position: absolute; left: 60px; bottom: 60px; max-width: 500px;
             background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px);
             padding: 24px 28px; border-radius: 24px; border-left: 5px solid #e50914;
             z-index: 15; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.4);
         }
-        .slide-description-card h2 { font-size: 36px; font-family: 'Playfair Display', serif; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .slide-description-card h2 { font-size: 36px; font-family: 'Playfair Display', serif; font-weight: 700; margin-bottom: 12px; }
         .slide-meta { display: flex; gap: 16px; margin-bottom: 12px; font-size: 14px; color: #ddd; }
-        .slide-meta span i { margin-right: 6px; }
         .rating { color: #f5c518; font-weight: 600; }
         .slide-description-card p { font-size: 14px; line-height: 1.5; margin-bottom: 16px; color: #ccc; }
         .slide-cast { font-size: 13px; color: #aaa; margin-bottom: 20px; }
-        .slide-cast strong { color: #e50914; }
         .btn-watch { background: #e50914; border: none; padding: 12px 32px; border-radius: 50px; color: white; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.25s; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(229,9,20,0.3); }
         .btn-watch:hover { background: #b81d24; transform: scale(1.02); }
         
-        /* Përmbajtja statike e sliderit (logo + search) */
         .slider-static-content {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             text-align: center; z-index: 20; width: 90%; max-width: 700px; pointer-events: none;
         }
-        .slider-static-content h1 {
-            font-size: 64px; font-weight: 800;
-            background: linear-gradient(135deg, #fff, #e50914);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            letter-spacing: -1px; margin-bottom: 20px; text-shadow: 0 0 30px rgba(0,0,0,0.5);
-            pointer-events: none;
-        }
         .slider-search { pointer-events: auto; }
         .slider-search input {
             width: 80%; max-width: 500px; padding: 14px 24px;
-            border-radius: 60px; border: none; background: rgba(255,255,255,0.15);
+            border-radius: 60px; border: none; background: rgba(0,0,0,0.6);
             backdrop-filter: blur(8px); color: white; font-size: 16px; outline: none;
             text-align: center; border: 1px solid rgba(255,255,255,0.3);
-            transition: 0.2s;
         }
-        .slider-search input:focus { background: rgba(255,255,255,0.25); border-color: #e50914; }
+        .slider-search input:focus { background: rgba(0,0,0,0.8); border-color: #e50914; }
         
-        /* Seksionet e filmave */
         .section-header { display: flex; justify-content: space-between; align-items: baseline; margin: 40px 0 20px; flex-wrap: wrap; }
         .section-title { font-size: 24px; font-weight: 700; border-left: 4px solid #e50914; padding-left: 15px; }
         .pagination-controls { display: flex; gap: 8px; }
@@ -122,7 +226,7 @@
     <div class="sidebar-top">
         <a href="#" id="homeLink"><i class="fas fa-home"></i><span>Home</span></a>
         <a href="#" id="moviesLink"><i class="fas fa-film"></i><span>Movies</span></a>
-        <a href="#" id="tvLink"><i class="fas fa-tv"></i><span>TV Shows</span></a>
+        <a href="tvshows.html" id="tvShowLink"><i class="fas fa-tv"></i><span>TV Shows</span></a>
         <a href="#" id="favoritesLink"><i class="fas fa-heart"></i><span>Favorites</span></a>
     </div>
     <div class="sidebar-bottom">
@@ -131,6 +235,23 @@
 </div>
 
 <div class="main">
+    <!-- Logo e re në vend të headerit të vjetër -->
+    <div style="margin-bottom: 20px;">
+        <a href="#" class="logo-container" style="text-decoration: none;">
+            <div class="logo-icon">
+                <div class="film-reel"><div class="reel-center"></div></div>
+            </div>
+            <div class="logo-text">
+                <span class="top">CINEMA PREMIUM</span>
+                <div class="bottom">
+                    <span class="albfilms">albfilms</span>
+                    <span class="num24">24</span>
+                    <div class="clapper"></div>
+                </div>
+            </div>
+        </a>
+    </div>
+
     <div class="hero-slider">
         <div class="swiper heroSwiper">
             <div class="swiper-wrapper" id="heroSlider"></div>
@@ -139,20 +260,18 @@
             <div class="swiper-pagination"></div>
         </div>
         <div class="slider-static-content">
-            <h1>ALBFILMS24.COM</h1>
             <div class="slider-search">
                 <input type="text" id="searchInputSlider" placeholder="Search movies, series...">
             </div>
         </div>
     </div>
 
-    <!-- Search Results Container (shfaqet poshtë sliderit) -->
     <div id="searchResultsContainer" style="display:none; margin-top: 20px;">
         <div class="section-header"><h2 class="section-title"><i class="fas fa-search"></i> Search Results</h2></div>
         <div class="movies-grid" id="searchGrid"></div>
     </div>
 
-    <!-- 14 zhanre me filma (2000+) -->
+    <!-- 14 zhanre me filma (8 faqe secili = 2240 filma) -->
     <div class="section-header"><h2 class="section-title"><i class="fas fa-bolt"></i> Action</h2><div class="pagination-controls" id="actionPagination"></div></div>
     <div class="movies-grid" id="actionGrid"></div>
     <div class="section-header"><h2 class="section-title"><i class="fas fa-laugh"></i> Comedy</h2><div class="pagination-controls" id="comedyPagination"></div></div>
@@ -182,33 +301,14 @@
     <div class="section-header"><h2 class="section-title"><i class="fas fa-landmark"></i> History</h2><div class="pagination-controls" id="historyPagination"></div></div>
     <div class="movies-grid" id="historyGrid"></div>
 
-    <!-- TV Series (500+) -->
-    <div class="section-header"><h2 class="section-title"><i class="fas fa-crown"></i> Greatest TV Series (500+)</h2><div class="pagination-controls" id="tvPagination"></div></div>
-    <div class="tv-grid" id="tvSeriesGrid"></div>
+    <!-- Një rresht i shkurtër serialesh në main (sipas dëshirës) -->
+    <div class="section-header"><h2 class="section-title"><i class="fas fa-tv"></i> Featured TV Series</h2></div>
+    <div class="tv-grid" id="featuredTvGrid"></div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <div class="footer-logo">AlbFilms<span>24</span></div>
-                <p>Your ultimate destination for HD movies and series. Since 2025, we deliver fresh titles with strict age ratings (18+/TV-MA). Viewer discretion advised.</p>
-                <div class="footer-badges"><span><i class="fas fa-shield-alt"></i> 18+</span><span><i class="fas fa-lock"></i> Secure</span><span><i class="fas fa-tachometer-alt"></i> Ultra HD</span></div>
-            </div>
-            <div class="footer-center">
-                <h4>Contact</h4>
-                <p><i class="fas fa-envelope"></i> albfilms24@hotmail.com</p>
-                <div class="social-links"><a href="#"><i class="fab fa-instagram"></i> Instagram</a><a href="#"><i class="fab fa-tiktok"></i> TikTok</a></div>
-                <p class="disclaimer"><i class="fas fa-exclamation-triangle"></i> Crime and erotic scenes are clearly labeled. Want new movies? Contact us. All content follows international classification standards – no exceptions.</p>
-            </div>
-            <div class="footer-right"><h4>Quick Links</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">DMCA</a><a href="#">Contact</a></div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2025 AlbFilms24. All rights reserved.</p></div>
-    </footer>
+    <footer class="footer">...</footer>
 </div>
 
-<div id="authModal" class="modal">
-    <div class="modal-content"><span class="close-modal">&times;</span><div class="auth-form"><input type="email" id="demoEmail" placeholder="Email"><input type="password" id="demoPass" placeholder="Password"><button class="btn-primary" id="demoLoginBtn">Sign In (Demo)</button></div></div>
-</div>
-<div id="userPanel" class="user-panel" style="display:none;">...</div>
+<div id="authModal" class="modal">...</div>
 <div id="toast" class="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -220,12 +320,14 @@
         const BACKDROP = 'https://image.tmdb.org/t/p/original';
         let swiper = null;
         let activePreview = null;
+
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
+
         async function showRichPreview(id, el, isTv) {
             if (activePreview) activePreview.remove();
             try {
@@ -253,7 +355,8 @@
                 if (parseInt(preview.style.left) + 360 > window.innerWidth) preview.style.left = rect.left - 370 + 'px';
             } catch(e) { console.error(e); }
         }
-        function createCard(item, isTv, containerId) {
+
+        function createCard(item, isTv, containerId, isFeatured = false) {
             const card = document.createElement('div');
             card.className = isTv ? 'tv-card' : 'movie-card';
             const title = item.title || item.name;
@@ -267,22 +370,21 @@
             card.onmouseenter = () => { timeout = setTimeout(() => showRichPreview(item.id, card, isTv), 400); };
             card.onmouseleave = () => { clearTimeout(timeout); if(activePreview) activePreview.remove(); };
             card.onclick = () => {
-                if (isTv) {
-                    window.location.href = `tv.html?id=${item.id}`;
-                } else {
-                    window.location.href = `watch.html?id=${item.id}&type=movie`;
-                }
+                if (isTv) window.location.href = `tv.html?id=${item.id}`;
+                else window.location.href = `watch.html?id=${item.id}&type=movie`;
             };
             document.getElementById(containerId).appendChild(card);
         }
-        async function loadGenreMovies(genreId, gridId, pagId, page = 1, genreName) {
+
+        // Load movies per genre with 8 pages
+        async function loadGenreMovies(genreId, gridId, pagId, page = 1) {
             const grid = document.getElementById(gridId);
             if (!grid) return;
-            if (page === 1) grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Loading...</div>';
+            if (page === 1) grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Loading movies...</div>';
             try {
                 const res = await fetch(`${BASE}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc&vote_count.gte=100&language=en-US&page=${page}`);
                 const data = await res.json();
-                const totalPages = Math.min(data.total_pages, 5);
+                const totalPages = Math.min(data.total_pages, 8);
                 if (page === 1) grid.innerHTML = '';
                 data.results.forEach(m => createCard(m, false, gridId));
                 const pagContainer = document.getElementById(pagId);
@@ -292,54 +394,23 @@
                         const btn = document.createElement('button');
                         btn.textContent = i;
                         btn.className = `page-btn ${i === page ? 'active' : ''}`;
-                        btn.onclick = () => { grid.innerHTML = ''; loadGenreMovies(genreId, gridId, pagId, i, genreName); };
+                        btn.onclick = () => { grid.innerHTML = ''; loadGenreMovies(genreId, gridId, pagId, i); };
                         pagContainer.appendChild(btn);
                     }
                 }
             } catch(e) { console.error(e); grid.innerHTML = '<div>Error</div>'; }
         }
-        const customTvIds = [
-            1396,60573,1399,46530,1416,1402,4629,62074,48866,46298,44608,47061,20798,70646,456,72759,
-            1405,1434,1398,1394,46285,94941,1488,1390,76479,44217,651,4614,1100,82856,76489,112733,
-            2691,65338,1408,1397,1392,44130,172,1437,45625,2907,37854,46261,46742,600,217,556,73586,
-            608,313,358,4600,76391,395,1420,1401,1477,1530,1406,1425,827,65782,46672,86834,505,1306,
-            116,526,611,451,509,768,2236,225,620,90510,476,134,935,500,655,269,1871,244,622,670,690,
-            713,714,715,716,717,718,719,720,721,722,723,724,334,164,21,438,459,839,840,841,842,843,
-            844,845,846,847,848,849,850,851,852,853
-        ];
-        let tvCurrentPage = 1, tvTotalPages = 5;
-        async function loadTVShows(page = 1) {
-            const grid = document.getElementById('tvSeriesGrid');
-            if (!grid) return;
-            if (page === 1) grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Loading 500+ series...</div>';
-            try {
-                const topRatedRes = await fetch(`${BASE}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`);
-                const topRatedData = await topRatedRes.json();
-                tvTotalPages = Math.min(topRatedData.total_pages, 5);
-                if (page === 1) {
-                    grid.innerHTML = '';
-                    for (let id of customTvIds.slice(0,250)) {
-                        try {
-                            const r = await fetch(`${BASE}/tv/${id}?api_key=${API_KEY}&language=en-US`);
-                            const show = await r.json();
-                            if (show.id) createCard(show, true, 'tvSeriesGrid');
-                        } catch(e) {}
-                    }
-                }
-                topRatedData.results.forEach(show => createCard(show, true, 'tvSeriesGrid'));
-                const pagContainer = document.getElementById('tvPagination');
-                if (pagContainer && page === 1) {
-                    pagContainer.innerHTML = '';
-                    for (let i = 1; i <= tvTotalPages; i++) {
-                        const btn = document.createElement('button');
-                        btn.textContent = i;
-                        btn.className = `page-btn ${i === page ? 'active' : ''}`;
-                        btn.onclick = () => { grid.innerHTML = ''; loadTVShows(i); };
-                        pagContainer.appendChild(btn);
-                    }
-                }
-            } catch(e) { console.error(e); }
+
+        // Featured TV (një rresht i vogël)
+        async function loadFeaturedTV() {
+            const grid = document.getElementById('featuredTvGrid');
+            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Loading featured series...</div>';
+            const res = await fetch(`${BASE}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`);
+            const data = await res.json();
+            grid.innerHTML = '';
+            data.results.slice(0, 8).forEach(show => createCard(show, true, 'featuredTvGrid'));
         }
+
         async function loadHeroSlider() {
             const res = await fetch(`${BASE}/movie/popular?api_key=${API_KEY}&language=en-US`);
             const data = await res.json();
@@ -357,15 +428,11 @@
                 const div = document.createElement('div');
                 div.className = 'swiper-slide';
                 div.innerHTML = `
-                    <img class="slide-bg" src="${BACKDROP + m.backdrop_path}" alt="${m.title}">
+                    <img class="slide-bg" src="${BACKDROP + m.backdrop_path}">
                     <div class="slide-overlay"></div>
                     <div class="slide-description-card">
                         <h2>${m.title}</h2>
-                        <div class="slide-meta">
-                            <span class="rating"><i class="fas fa-star"></i> ${rating}/10</span>
-                            <span><i class="fas fa-calendar-alt"></i> ${det.release_date?.split('-')[0] || 'N/A'}</span>
-                            <span><i class="fas fa-clock"></i> ${det.runtime || '?'} min</span>
-                        </div>
+                        <div class="slide-meta"><span class="rating"><i class="fas fa-star"></i> ${rating}/10</span><span><i class="fas fa-calendar-alt"></i> ${det.release_date?.split('-')[0] || 'N/A'}</span><span><i class="fas fa-clock"></i> ${det.runtime || '?'} min</span></div>
                         <p>${overview}...</p>
                         <div class="slide-cast"><i class="fas fa-users"></i> <strong>Cast:</strong> ${castList}</div>
                         <button class="btn-watch" onclick="location.href='watch.html?id=${m.id}&type=movie'"><i class="fas fa-play"></i> Watch Now</button>
@@ -374,13 +441,9 @@
                 wrapper.appendChild(div);
             }
             if (swiper) swiper.destroy();
-            swiper = new Swiper('.heroSwiper', {
-                loop: true,
-                autoplay: { delay: 6000, disableOnInteraction: false },
-                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-                pagination: { el: '.swiper-pagination', clickable: true }
-            });
+            swiper = new Swiper('.heroSwiper', { loop: true, autoplay: { delay: 6000 }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, pagination: { el: '.swiper-pagination', clickable: true } });
         }
+
         async function searchContent(query) {
             if (!query || query.length < 3) {
                 document.getElementById('searchResultsContainer').style.display = 'none';
@@ -394,6 +457,7 @@
             results.forEach(item => createCard(item, item.media_type === 'tv', 'searchGrid'));
             document.getElementById('searchResultsContainer').style.display = results.length ? 'block' : 'none';
         }
+
         function initGenres() {
             const genres = [
                 { id:28, grid:'actionGrid', pag:'actionPagination' }, { id:35, grid:'comedyGrid', pag:'comedyPagination' },
@@ -404,19 +468,20 @@
                 { id:10752, grid:'warGrid', pag:'warPagination' }, { id:37, grid:'westernGrid', pag:'westernPagination' },
                 { id:10402, grid:'musicGrid', pag:'musicPagination' }, { id:36, grid:'historyGrid', pag:'historyPagination' }
             ];
-            genres.forEach(g => loadGenreMovies(g.id, g.grid, g.pag, 1, g.grid));
+            genres.forEach(g => loadGenreMovies(g.id, g.grid, g.pag, 1));
         }
+
         document.getElementById('searchInputSlider').addEventListener('input', e => searchContent(e.target.value));
         document.getElementById('userIconSidebar').onclick = () => document.getElementById('authModal').style.display = 'flex';
         document.querySelector('.close-modal').onclick = () => document.getElementById('authModal').style.display = 'none';
         document.getElementById('demoLoginBtn').onclick = () => { showToast('Demo login'); document.getElementById('authModal').style.display = 'none'; };
-        document.getElementById('homeLink')?.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
-        document.getElementById('moviesLink')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('actionGrid').scrollIntoView({ behavior: 'smooth' }); });
-        document.getElementById('tvLink')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('tvSeriesGrid').scrollIntoView({ behavior: 'smooth' }); });
-        document.getElementById('favoritesLink')?.addEventListener('click', (e) => { e.preventDefault(); showToast('Login to see favorites'); });
+        document.getElementById('homeLink').onclick = (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+        document.getElementById('moviesLink').onclick = (e) => { e.preventDefault(); document.getElementById('actionGrid').scrollIntoView({ behavior: 'smooth' }); };
+        document.getElementById('favoritesLink').onclick = (e) => { e.preventDefault(); showToast('Login to see favorites'); };
+
         loadHeroSlider();
         initGenres();
-        loadTVShows(1);
+        loadFeaturedTV();
     })();
 </script>
 </body>
