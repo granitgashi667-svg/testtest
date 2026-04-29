@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlbFilms24 - TV Series (500+ Shows)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        /* E njëjta logo dhe sidebar si në index, por me disa ndryshime të vogla */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; }
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { position: relative; width: 55px; height: 55px; background: linear-gradient(135deg, #000000, #2a0000); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(229,9,20,0.3); overflow: hidden; }
+        .logo-icon::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%); transform: rotate(25deg); animation: glossMove 6s infinite; }
+        @keyframes glossMove { 0% { transform: translate(-30%, -30%) rotate(25deg); opacity: 0; } 50% { transform: translate(0%, 0%) rotate(25deg); opacity: 0.6; } 100% { transform: translate(30%, 30%) rotate(25deg); opacity: 0; } }
+        .film-reel { width: 40px; height: 40px; background: repeating-radial-gradient(circle at 50% 50%, #e50914 0px, #e50914 4px, #000 4px, #000 8px); border-radius: 50%; position: relative; animation: spinSlow 8s linear infinite; }
+        @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .reel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; background: #000; border-radius: 50%; border: 1px solid #e50914; }
+        .logo-text { display: flex; flex-direction: column; line-height: 1; }
+        .logo-text .top { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 1px; background: linear-gradient(135deg, #fff, #e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .logo-text .bottom { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 800; display: flex; align-items: baseline; gap: 4px; }
+        .bottom .albfilms { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; background: linear-gradient(135deg, #e50914, #ff6600); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .bottom .num24 { font-family: 'Montserrat', sans-serif; font-size: 40px; font-weight: 800; color: #FFD700; text-shadow: 0 0 5px #e50914; animation: pulseNeon 1.5s ease-in-out infinite; }
+        @keyframes pulseNeon { 0%, 100% { text-shadow: 0 0 2px #e50914; } 50% { text-shadow: 0 0 8px #e50914; } }
+        .clapper { display: inline-block; width: 18px; height: 18px; background: #e50914; margin-left: 5px; clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 60% 100%, 0% 80%); animation: clap 1s infinite; }
+        @keyframes clap { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.9); } }
+        
+        .sidebar { position: fixed; left: 0; top: 0; width: 120px; height: 100vh; background: rgba(10,10,15,0.96); backdrop-filter: blur(12px); display: flex; flex-direction: column; justify-content: space-between; padding: 30px 0; z-index: 100; border-right: 1px solid rgba(255,255,255,0.08); }
+        .sidebar-top, .sidebar-bottom { display: flex; flex-direction: column; align-items: center; gap: 25px; }
+        .sidebar a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #aaa; gap: 5px; transition: 0.2s; font-size: 12px; font-weight: 500; }
+        .sidebar a i { font-size: 22px; }
+        .sidebar a:hover, .sidebar a.active { color: #e50914; }
+        
+        .main { margin-left: 120px; padding: 20px 40px; }
+        .search-header { display: flex; justify-content: center; margin: 20px 0 30px; }
+        .search-header input { width: 50%; padding: 14px 24px; border-radius: 60px; border: none; background: #1e2026; color: white; font-size: 16px; text-align: center; border: 1px solid #333; }
+        .search-header input:focus { outline: none; border-color: #e50914; }
+        .genre-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; justify-content: center; }
+        .genre-btn { background: #1e2026; border: none; padding: 8px 20px; border-radius: 40px; color: #ccc; cursor: pointer; transition: 0.2s; }
+        .genre-btn.active, .genre-btn:hover { background: #e50914; color: white; }
+        .section-header { display: flex; justify-content: space-between; align-items: baseline; margin: 30px 0 20px; }
+        .section-title { font-size: 24px; font-weight: 700; border-left: 4px solid #e50914; padding-left: 15px; }
+        .tv-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; margin-bottom: 30px; }
+        @media (max-width: 1200px) { .tv-grid { grid-template-columns: repeat(4,1fr); } }
+        @media (max-width: 800px) { .tv-grid { grid-template-columns: repeat(3,1fr); } }
+        .tv-card { background: #181a24; border-radius: 14px; overflow: hidden; transition: transform 0.25s; cursor: pointer; }
+        .tv-card:hover { transform: translateY(-6px); box-shadow: 0 12px 20px rgba(0,0,0,0.4); }
+        .poster { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
+        .card-info { padding: 12px; }
+        .card-info h4 { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pagination { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
+        .page-btn { background: #1e2026; border: none; padding: 6px 14px; border-radius: 30px; color: #ccc; cursor: pointer; }
+        .page-btn.active, .page-btn:hover { background: #e50914; color: white; }
+        .footer { margin-top: 60px; background: #0c0e12; border-radius: 30px 30px 0 0; padding: 30px; text-align: center; }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #e50914; padding: 10px 20px; border-radius: 30px; opacity: 0; transition: 0.3s; z-index: 3500; }
+        .toast.show { opacity: 1; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-top">
+        <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="index.html#movies"><i class="fas fa-film"></i><span>Movies</span></a>
+        <a href="tvshows.html" class="active"><i class="fas fa-tv"></i><span>TV Shows</span></a>
+        <a href="#"><i class="fas fa-heart"></i><span>Favorites</span></a>
+    </div>
+    <div class="sidebar-bottom">
+        <a href="#" id="userIconSidebar"><i class="fas fa-user-circle"></i><span>Login</span></a>
+    </div>
+</div>
+
+<div class="main">
+    <div style="margin-bottom: 20px;">
+        <a href="index.html" class="logo-container" style="text-decoration: none;">
+            <div class="logo-icon"><div class="film-reel"><div class="reel-center"></div></div></div>
+            <div class="logo-text"><span class="top">SERIES PREMIUM</span><div class="bottom"><span class="albfilms">albfilms</span><span class="num24">24</span><div class="clapper"></div></div></div>
+        </a>
+    </div>
+
+    <div class="search-header">
+        <input type="text" id="searchTV" placeholder="Search TV series... (min 3 letters)">
+    </div>
+
+    <div class="genre-buttons" id="genreButtonsTV">
+        <button data-genre="28" class="genre-btn active">Action</button>
+        <button data-genre="35" class="genre-btn">Comedy</button>
+        <button data-genre="18" class="genre-btn">Drama</button>
+        <button data-genre="80" class="genre-btn">Crime</button>
+        <button data-genre="99" class="genre-btn">Documentary</button>
+        <button data-genre="16" class="genre-btn">Animation</button>
+        <button data-genre="10765" class="genre-btn">Sci-Fi & Fantasy</button>
+        <button data-genre="10759" class="genre-btn">Action & Adventure</button>
+        <button data-genre="10768" class="genre-btn">War & Politics</button>
+    </div>
+
+    <div class="section-header"><h2 class="section-title"><i class="fas fa-tv"></i> TV Series</h2></div>
+    <div class="tv-grid" id="tvShowsGrid"></div>
+    <div class="pagination" id="tvPagination"></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+    const API_KEY = '7a98db423d6e3a5ee922a3e51a09d135';
+    const BASE = 'https://api.themoviedb.org/3';
+    const IMG = 'https://image.tmdb.org/t/p/w500';
+    let currentGenre = 28;
+    let currentPage = 1;
+    let totalPages = 1;
+    let currentSearchQuery = '';
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function createCard(show) {
+        const card = document.createElement('div');
+        card.className = 'tv-card';
+        const title = show.name;
+        const year = (show.first_air_date || '').split('-')[0] || 'N/A';
+        const rating = show.vote_average ? show.vote_average.toFixed(1) : '?';
+        card.innerHTML = `
+            <img class="poster" src="${show.poster_path ? IMG+show.poster_path : 'https://via.placeholder.com/300x450?text=No+Image'}" alt="${title}">
+            <div class="card-info"><h4>${title}</h4><p>${year} ⭐ ${rating}</p></div>
+        `;
+        card.onclick = () => window.location.href = `tv.html?id=${show.id}`;
+        return card;
+    }
+
+    async function loadTVShows(page = 1, genre = currentGenre, search = '') {
+        const grid = document.getElementById('tvShowsGrid');
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Loading series...</div>';
+        let url = '';
+        if (search && search.length >= 3) {
+            url = `${BASE}/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(search)}&language=en-US&page=${page}`;
+        } else {
+            url = `${BASE}/discover/tv?api_key=${API_KEY}&with_genres=${genre}&sort_by=popularity.desc&vote_count.gte=50&language=en-US&page=${page}`;
+        }
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            totalPages = Math.min(data.total_pages, 10);
+            grid.innerHTML = '';
+            data.results.forEach(show => {
+                if (show.poster_path) grid.appendChild(createCard(show));
+            });
+            const paginationDiv = document.getElementById('tvPagination');
+            paginationDiv.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = `page-btn ${i === page ? 'active' : ''}`;
+                btn.onclick = () => { currentPage = i; loadTVShows(i, currentGenre, currentSearchQuery); };
+                paginationDiv.appendChild(btn);
+            }
+        } catch(e) { console.error(e); grid.innerHTML = '<div>Error loading series</div>'; }
+    }
+
+    document.getElementById('searchTV').addEventListener('input', (e) => {
+        currentSearchQuery = e.target.value;
+        if (currentSearchQuery.length >= 3) {
+            currentPage = 1;
+            loadTVShows(1, currentGenre, currentSearchQuery);
+        } else if (currentSearchQuery.length === 0) {
+            currentPage = 1;
+            loadTVShows(1, currentGenre, '');
+        } else {
+            document.getElementById('tvShowsGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;">Type at least 3 letters...</div>';
+        }
+    });
+
+    document.querySelectorAll('.genre-btn').forEach(btn => {
+        btn.onclick = () => {
+            document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentGenre = parseInt(btn.dataset.genre);
+            currentSearchQuery = '';
+            document.getElementById('searchTV').value = '';
+            currentPage = 1;
+            loadTVShows(1, currentGenre, '');
+        };
+    });
+
+    document.getElementById('userIconSidebar').onclick = () => showToast('Demo login (Firebase integration ready)');
+    loadTVShows(1, 28, '');
+</script>
+</body>
+</html>
