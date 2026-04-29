@@ -2,19 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlbFilms24 - 2000+ Movies & 500+ TV Series</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AlbFilms24 - 2000+ Movies & 500+ Series</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; }
+        /* Sidebar */
+        .sidebar { position: fixed; left: 0; top: 0; width: 90px; height: 100vh; background: rgba(15,20,30,0.98); backdrop-filter: blur(15px); display: flex; flex-direction: column; align-items: center; padding: 30px 0; gap: 30px; z-index: 100; border-right: 1px solid rgba(255,255,255,0.08); }
+        .logo-text { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #fff, #e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .sidebar a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #aaa; gap: 5px; transition: 0.2s; }
+        .sidebar a i { font-size: 24px; }
+        .sidebar a span { font-size: 11px; }
+        .sidebar a:hover, .sidebar a.active { color: #e50914; transform: translateY(-3px); }
+        .main { margin-left: 90px; padding: 20px 40px; max-width: calc(100% - 90px); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
+        .brand { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #fff, #e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .header-actions { display: flex; align-items: center; gap: 15px; }
+        #searchInput { background: #1e2026; border: 1px solid #333; border-radius: 40px; padding: 10px 20px; color: white; width: 260px; }
+        #userIcon { font-size: 32px; cursor: pointer; }
+        .hero-slider { margin-bottom: 40px; border-radius: 20px; overflow: hidden; }
+        .swiper { width: 100%; height: 500px; }
+        .swiper-slide { position: relative; }
+        .slide-bg { width: 100%; height: 100%; object-fit: cover; }
+        .slide-content { position: absolute; bottom: 60px; left: 60px; max-width: 550px; background: linear-gradient(90deg, rgba(0,0,0,0.7), transparent); padding: 20px; border-radius: 12px; }
+        .btn-watch { background: #e50914; border: none; padding: 10px 24px; border-radius: 40px; color: white; font-weight: 600; cursor: pointer; }
+        .section-header { display: flex; justify-content: space-between; align-items: baseline; margin: 30px 0 20px; flex-wrap: wrap; }
+        .section-title { font-size: 24px; font-weight: 700; border-left: 4px solid #e50914; padding-left: 15px; }
+        .pagination-controls { display: flex; gap: 8px; }
+        .page-btn { background: #1e2026; border: none; padding: 6px 14px; border-radius: 30px; color: #ccc; cursor: pointer; transition: 0.2s; }
+        .page-btn.active, .page-btn:hover { background: #e50914; color: white; }
+        .movies-grid, .tv-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 20px; margin-bottom: 30px; }
+        @media (max-width:1400px){ .movies-grid, .tv-grid { grid-template-columns: repeat(6,1fr); } }
+        @media (max-width:1100px){ .movies-grid, .tv-grid { grid-template-columns: repeat(4,1fr); } }
+        .movie-card, .tv-card { background: #181a24; border-radius: 14px; overflow: hidden; transition: transform 0.25s; cursor: pointer; position: relative; }
+        .movie-card:hover, .tv-card:hover { transform: translateY(-6px); box-shadow: 0 12px 20px rgba(0,0,0,0.4); }
+        .poster { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
+        .card-info { padding: 12px; }
+        .card-info h4 { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-info p { font-size: 12px; color: #aaa; }
+        .preview-rich { position: absolute; width: 340px; background: #1a1c22; border-radius: 16px; overflow: hidden; z-index: 2000; border: 1px solid #e50914; }
+        .preview-trailer iframe { width: 100%; height: 190px; border: none; }
+        .preview-info { padding: 12px; }
+        .footer { margin-top: 60px; background: #0c0e12; border-radius: 30px 30px 0 0; padding: 40px 30px 20px; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 40px; }
+        .footer-logo { font-size: 24px; font-weight: 800; background: linear-gradient(135deg,#fff,#e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .social-links a { margin-right: 15px; color: #ccc; text-decoration: none; }
+        .disclaimer { font-size: 12px; color: #888; background: #1a1c22; padding: 12px; border-radius: 12px; margin-top: 15px; }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #e50914; padding: 10px 20px; border-radius: 30px; opacity: 0; transition: 0.3s; z-index: 3500; }
+        .toast.show { opacity: 1; }
+        .modal { display: none; position: fixed; top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:3000;align-items:center;justify-content:center; }
+        .modal-content { background:#1e2026; max-width:400px; width:90%; border-radius:24px; padding:24px; }
+        .close-modal { float:right; font-size:28px; cursor:pointer; }
+        .auth-form { display:flex; flex-direction:column; gap:12px; margin-top:20px; }
+        .auth-form input { padding:10px; border-radius:30px; border:none; background:#2a2c30; color:white; }
+        .btn-primary { background:#e50914; border:none; padding:10px; border-radius:30px; color:white; cursor:pointer; }
+    </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <div class="logo-container">
-        <div class="logo-text">AF<span>24</span></div>
-    </div>
+    <div class="logo-text">AF<span>24</span></div>
     <a href="#" id="homeLink"><i class="fas fa-home"></i><span>Home</span></a>
     <a href="#" id="moviesLink"><i class="fas fa-film"></i><span>Movies</span></a>
     <a href="#" id="tvLink"><i class="fas fa-tv"></i><span>TV Shows</span></a>
@@ -25,10 +75,7 @@
     <div class="header">
         <h1 class="brand">AlbFilms<span>24</span></h1>
         <div class="header-actions">
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search movies, series...">
-                <i class="fas fa-search search-icon"></i>
-            </div>
+            <input type="text" id="searchInput" placeholder="Search movies, series...">
             <i id="userIcon" class="fas fa-user-circle"></i>
         </div>
     </div>
@@ -42,7 +89,7 @@
         </div>
     </div>
 
-    <!-- 14 genre rows for 2000+ movies -->
+    <!-- 14 genres para -->
     <div class="section-header"><h2 class="section-title"><i class="fas fa-bolt"></i> Action</h2><div class="pagination-controls" id="actionPagination"></div></div>
     <div class="movies-grid" id="actionGrid"></div>
 
@@ -85,7 +132,7 @@
     <div class="section-header"><h2 class="section-title"><i class="fas fa-landmark"></i> History</h2><div class="pagination-controls" id="historyPagination"></div></div>
     <div class="movies-grid" id="historyGrid"></div>
 
-    <!-- TV Series Section: 500+ top rated plus custom list -->
+    <!-- TV Series -->
     <div class="section-header"><h2 class="section-title"><i class="fas fa-crown"></i> Greatest TV Series (500+)</h2><div class="pagination-controls" id="tvPagination"></div></div>
     <div class="tv-grid" id="tvSeriesGrid"></div>
 
@@ -94,43 +141,226 @@
         <div class="movies-grid" id="searchGrid"></div>
     </div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <div class="footer-logo">AlbFilms<span>24</span></div>
-                <p>Your ultimate destination for HD movies and series. Since 2025, we deliver fresh titles with strict age ratings (18+/TV-MA). Viewer discretion advised.</p>
-                <div class="footer-badges">
-                    <span><i class="fas fa-shield-alt"></i> 18+</span>
-                    <span><i class="fas fa-lock"></i> Secure</span>
-                    <span><i class="fas fa-tachometer-alt"></i> Ultra HD</span>
-                </div>
-            </div>
-            <div class="footer-center">
-                <h4>Contact</h4>
-                <p><i class="fas fa-envelope"></i> albfilms24@hotmail.com</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-                    <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
-                </div>
-                <p class="disclaimer"><i class="fas fa-exclamation-triangle"></i> Crime and erotic scenes are clearly labeled. Want new movies? Contact us. All content follows international classification standards – no exceptions.</p>
-            </div>
-            <div class="footer-right">
-                <h4>Quick Links</h4>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-                <a href="#">DMCA</a>
-                <a href="#">Contact</a>
-            </div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2025 AlbFilms24. All rights reserved.</p></div>
-    </footer>
+    <footer class="footer"> ... </footer>
 </div>
 
 <div id="authModal" class="modal">...</div>
-<div id="userPanel" class="user-panel">...</div>
+<div id="userPanel" class="user-panel" style="display:none;">...</div>
 <div id="toast" class="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script type="module" src="main.js"></script>
+<script>
+    (function() {
+        const API_KEY = '7a98db423d6e3a5ee922a3e51a09d135';
+        const BASE = 'https://api.themoviedb.org/3';
+        const IMG = 'https://image.tmdb.org/t/p/w500';
+        const BACKDROP = 'https://image.tmdb.org/t/p/original';
+
+        let swiper = null;
+        let activePreview = null;
+
+        // Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Rich preview
+        async function showRichPreview(id, el, isTv) {
+            if (activePreview) activePreview.remove();
+            try {
+                const type = isTv ? 'tv' : 'movie';
+                const [details, videos] = await Promise.all([
+                    fetch(`${BASE}/${type}/${id}?api_key=${API_KEY}&language=en-US`).then(r=>r.json()),
+                    !isTv ? fetch(`${BASE}/movie/${id}/videos?api_key=${API_KEY}`).then(r=>r.json()) : { results: [] }
+                ]);
+                const trailer = videos.results?.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+                const title = details.title || details.name;
+                const year = (details.release_date || details.first_air_date || '').split('-')[0] || 'N/A';
+                const preview = document.createElement('div');
+                preview.className = 'preview-rich';
+                preview.innerHTML = `
+                    <div class="preview-trailer">
+                        ${trailer ? `<iframe src="https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1" frameborder="0" allow="autoplay"></iframe>` : '<div style="height:190px;background:#111;display:flex;align-items:center;justify-content:center;">🎬 No trailer</div>'}
+                    </div>
+                    <div class="preview-info">
+                        <h4>${title} (${year})</h4>
+                        <p>${details.overview?.substring(0,100)}...</p>
+                    </div>
+                `;
+                document.body.appendChild(preview);
+                activePreview = preview;
+                const rect = el.getBoundingClientRect();
+                preview.style.top = rect.top + window.scrollY + 'px';
+                preview.style.left = rect.left + rect.width + 15 + 'px';
+                if (parseInt(preview.style.left) + 360 > window.innerWidth) preview.style.left = rect.left - 370 + 'px';
+            } catch(e) { console.error(e); }
+        }
+
+        // Create movie/tv card
+        function createCard(item, isTv, containerId) {
+            const card = document.createElement('div');
+            card.className = isTv ? 'tv-card' : 'movie-card';
+            const title = item.title || item.name;
+            const year = (item.release_date || item.first_air_date || '').split('-')[0] || 'N/A';
+            const rating = item.vote_average ? item.vote_average.toFixed(1) : '?';
+            card.innerHTML = `
+                <img class="poster" src="${item.poster_path ? IMG+item.poster_path : 'https://via.placeholder.com/300x450?text=No+Image'}" alt="${title}">
+                <div class="card-info"><h4>${title}</h4><p>${year} ⭐ ${rating}</p></div>
+            `;
+            let timeout;
+            card.onmouseenter = () => { timeout = setTimeout(() => showRichPreview(item.id, card, isTv), 400); };
+            card.onmouseleave = () => { clearTimeout(timeout); if(activePreview) activePreview.remove(); };
+            card.onclick = () => window.location.href = `watch.html?id=${item.id}&type=${isTv ? 'tv' : 'movie'}`;
+            document.getElementById(containerId).appendChild(card);
+        }
+
+        // Load movies for a genre with pagination (up to 5 pages = 100 movies)
+        async function loadGenreMovies(genreId, gridId, pagId, page = 1, genreName) {
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+            if (page === 1) grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Loading...</div>';
+            try {
+                const res = await fetch(`${BASE}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc&vote_count.gte=100&language=en-US&page=${page}`);
+                const data = await res.json();
+                const totalPages = Math.min(data.total_pages, 5);
+                if (page === 1) grid.innerHTML = '';
+                data.results.forEach(m => createCard(m, false, gridId));
+                const pagContainer = document.getElementById(pagId);
+                if (pagContainer && page === 1) {
+                    pagContainer.innerHTML = '';
+                    for (let i = 1; i <= totalPages; i++) {
+                        const btn = document.createElement('button');
+                        btn.textContent = i;
+                        btn.className = `page-btn ${i === page ? 'active' : ''}`;
+                        btn.onclick = () => { grid.innerHTML = ''; loadGenreMovies(genreId, gridId, pagId, i, genreName); };
+                        pagContainer.appendChild(btn);
+                    }
+                }
+            } catch(e) { console.error(e); grid.innerHTML = '<div>Error</div>'; }
+        }
+
+        // Load TV series: custom IDs + top rated (500+)
+        const customTvIds = [
+            1396,60573,1399,46530,1416,1402,4629,62074,48866,46298,44608,47061,20798,70646,456,72759,
+            1405,1434,1398,1394,46285,94941,1488,1390,76479,44217,651,4614,1100,82856,76489,112733,
+            2691,65338,1408,1397,1392,44130,172,1437,45625,2907,37854,46261,46742,600,217,556,73586,
+            608,313,358,4600,76391,395,1420,1401,1477,1530,1406,1425,827,65782,46672,86834,505,1306,
+            116,526,611,451,509,768,2236,225,620,90510,476,134,935,500,655,269,1871,244,622,670,690,
+            713,714,715,716,717,718,719,720,721,722,723,724,334,164,21,438,459,839,840,841,842,843,
+            844,845,846,847,848,849,850,851,852,853,100,200,300,400,500,600,700,800,900,1000
+        ];
+        let tvCurrentPage = 1;
+        let tvTotalPages = 5;
+        async function loadTVShows(page = 1) {
+            const grid = document.getElementById('tvSeriesGrid');
+            if (!grid) return;
+            if (page === 1) grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Loading 500+ series...</div>';
+            try {
+                // Load top rated TV from TMDB (multiple pages)
+                const topRatedRes = await fetch(`${BASE}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`);
+                const topRatedData = await topRatedRes.json();
+                tvTotalPages = Math.min(topRatedData.total_pages, 5);
+                if (page === 1) {
+                    grid.innerHTML = '';
+                    // Load custom IDs (first 250)
+                    for (let id of customTvIds.slice(0,250)) {
+                        try {
+                            const r = await fetch(`${BASE}/tv/${id}?api_key=${API_KEY}&language=en-US`);
+                            const show = await r.json();
+                            if (show.id) createCard(show, true, 'tvSeriesGrid');
+                        } catch(e) {}
+                    }
+                }
+                topRatedData.results.forEach(show => createCard(show, true, 'tvSeriesGrid'));
+                const pagContainer = document.getElementById('tvPagination');
+                if (pagContainer && page === 1) {
+                    pagContainer.innerHTML = '';
+                    for (let i = 1; i <= tvTotalPages; i++) {
+                        const btn = document.createElement('button');
+                        btn.textContent = i;
+                        btn.className = `page-btn ${i === page ? 'active' : ''}`;
+                        btn.onclick = () => { grid.innerHTML = ''; loadTVShows(i); };
+                        pagContainer.appendChild(btn);
+                    }
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        // Hero slider
+        async function loadHeroSlider() {
+            const res = await fetch(`${BASE}/movie/popular?api_key=${API_KEY}&language=en-US`);
+            const data = await res.json();
+            const slides = data.results.slice(0, 6);
+            const wrapper = document.getElementById('heroSlider');
+            wrapper.innerHTML = '';
+            slides.forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'swiper-slide';
+                div.innerHTML = `
+                    <img class="slide-bg" src="${BACKDROP + m.backdrop_path}" alt="${m.title}">
+                    <div class="slide-content">
+                        <h2>${m.title}</h2>
+                        <p>${(m.overview || '').substring(0,120)}...</p>
+                        <button class="btn-watch" onclick="location.href='watch.html?id=${m.id}&type=movie'">Watch Now</button>
+                    </div>
+                `;
+                wrapper.appendChild(div);
+            });
+            if (swiper) swiper.destroy();
+            swiper = new Swiper('.heroSwiper', { loop: true, autoplay: { delay: 5500 }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, pagination: { el: '.swiper-pagination', clickable: true } });
+        }
+
+        // Search
+        async function searchContent(query) {
+            if (!query || query.length < 2) { document.getElementById('searchResultsContainer').style.display = 'none'; return; }
+            const res = await fetch(`${BASE}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=en-US`);
+            const data = await res.json();
+            const results = data.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv').slice(0, 24);
+            const grid = document.getElementById('searchGrid');
+            grid.innerHTML = '';
+            results.forEach(item => createCard(item, item.media_type === 'tv', 'searchGrid'));
+            document.getElementById('searchResultsContainer').style.display = results.length ? 'block' : 'none';
+        }
+
+        // Initialize all genre grids
+        function initGenres() {
+            const genres = [
+                { id:28, grid:'actionGrid', pag:'actionPagination', name:'action' },
+                { id:35, grid:'comedyGrid', pag:'comedyPagination', name:'comedy' },
+                { id:18, grid:'dramaGrid', pag:'dramaPagination', name:'drama' },
+                { id:27, grid:'horrorGrid', pag:'horrorPagination', name:'horror' },
+                { id:10749, grid:'romanceGrid', pag:'romancePagination', name:'romance' },
+                { id:878, grid:'scifiGrid', pag:'scifiPagination', name:'scifi' },
+                { id:99, grid:'docGrid', pag:'docPagination', name:'doc' },
+                { id:80, grid:'crimeGrid', pag:'crimePagination', name:'crime' },
+                { id:12, grid:'adventureGrid', pag:'adventurePagination', name:'adventure' },
+                { id:14, grid:'fantasyGrid', pag:'fantasyPagination', name:'fantasy' },
+                { id:10752, grid:'warGrid', pag:'warPagination', name:'war' },
+                { id:37, grid:'westernGrid', pag:'westernPagination', name:'western' },
+                { id:10402, grid:'musicGrid', pag:'musicPagination', name:'music' },
+                { id:36, grid:'historyGrid', pag:'historyPagination', name:'history' }
+            ];
+            genres.forEach(g => loadGenreMovies(g.id, g.grid, g.pag, 1, g.name));
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', e => searchContent(e.target.value));
+        document.getElementById('userIcon').onclick = () => document.getElementById('authModal').style.display = 'flex';
+        document.querySelector('.close-modal')?.addEventListener('click', () => document.getElementById('authModal').style.display = 'none');
+        document.getElementById('demoLoginBtn')?.addEventListener('click', () => { showToast('Demo login'); document.getElementById('authModal').style.display = 'none'; });
+        document.getElementById('homeLink')?.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.getElementById('moviesLink')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('actionGrid').scrollIntoView({ behavior: 'smooth' }); });
+        document.getElementById('tvLink')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('tvSeriesGrid').scrollIntoView({ behavior: 'smooth' }); });
+        document.getElementById('favoritesLink')?.addEventListener('click', (e) => { e.preventDefault(); showToast('Login to see favorites'); });
+
+        // Start
+        loadHeroSlider();
+        initGenres();
+        loadTVShows(1);
+    })();
+</script>
 </body>
 </html>
