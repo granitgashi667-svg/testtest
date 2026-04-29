@@ -11,164 +11,74 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; }
         
-        /* ========== SIDEBAR (Desktop) ========== */
         .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 80px;
-            height: 100vh;
-            background: rgba(10,10,15,0.96);
-            backdrop-filter: blur(12px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 30px 0;
-            z-index: 100;
+            position: fixed; left: 0; top: 0; width: 80px; height: 100vh;
+            background: rgba(10,10,15,0.96); backdrop-filter: blur(12px);
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: space-between; padding: 30px 0; z-index: 100;
             border-right: 1px solid rgba(255,255,255,0.08);
         }
-        .sidebar-top, .sidebar-bottom {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-        }
-        .sidebar a {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #aaa;
-            gap: 5px;
-            transition: 0.2s;
-            font-size: 11px;
-            font-weight: 500;
-        }
+        .sidebar-top, .sidebar-bottom { display: flex; flex-direction: column; align-items: center; gap: 25px; }
+        .sidebar a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #aaa; gap: 5px; transition: 0.2s; font-size: 11px; font-weight: 500; }
         .sidebar a i { font-size: 24px; }
         .sidebar a span { font-size: 11px; }
         .sidebar a:hover, .sidebar a.active { color: #e50914; transform: translateY(-3px); }
         
-        /* ========== MAIN ========== */
         .main { margin-left: 80px; padding: 20px 40px; max-width: calc(100% - 80px); }
         
-        /* Hero Slider */
-        .hero-slider {
-            position: relative;
-            margin-bottom: 40px;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.6);
-        }
+        .hero-slider { position: relative; margin-bottom: 40px; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.6); }
         .swiper { width: 100%; height: 600px; }
         .swiper-slide { position: relative; }
         .slide-bg { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .swiper-slide-active .slide-bg { transform: scale(1.02); }
-        .slide-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
-        }
-        .slide-description-card {
-            position: absolute;
-            left: 60px;
-            bottom: 80px;
-            max-width: 520px;
-            background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(16px);
-            padding: 28px 32px;
-            border-radius: 32px;
-            border-left: 5px solid #e50914;
-            z-index: 15;
-        }
-        .slide-description-card h2 {
-            font-size: 38px;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #fff, #e50914);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
+        .slide-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%); }
+        .slide-description-card { position: absolute; left: 60px; bottom: 80px; max-width: 520px; background: rgba(0,0,0,0.65); backdrop-filter: blur(16px); padding: 28px 32px; border-radius: 32px; border-left: 5px solid #e50914; z-index: 15; }
+        .slide-description-card h2 { font-size: 38px; font-family: 'Playfair Display', serif; font-weight: 700; margin-bottom: 12px; background: linear-gradient(135deg, #fff, #e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .slide-meta { display: flex; gap: 20px; margin-bottom: 14px; font-size: 14px; color: #ddd; }
         .rating { color: #f5c518; font-weight: 600; }
         .slide-description-card p { font-size: 15px; line-height: 1.5; margin-bottom: 18px; color: #e0e0e0; }
         .slide-cast { font-size: 13px; color: #bbb; margin-bottom: 22px; }
-        .btn-watch {
-            background: #e50914;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 50px;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.25s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .btn-watch { background: #e50914; border: none; padding: 12px 32px; border-radius: 50px; color: white; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.25s; display: inline-flex; align-items: center; gap: 10px; }
         .btn-watch:hover { background: #b81d24; transform: scale(1.02); }
         
-        /* Slider static content (logo + search) */
-        .slider-static-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 20;
-            width: 90%;
-            max-width: 700px;
-            pointer-events: none;
-        }
-        .slider-static-content h1 {
-            font-size: 64px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, #e50914);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-            pointer-events: none;
-        }
+        .slider-static-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 20; width: 90%; max-width: 700px; pointer-events: none; }
+        .slider-static-content h1 { font-size: 64px; font-weight: 800; background: linear-gradient(135deg, #fff, #e50914); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1px; margin-bottom: 20px; pointer-events: none; }
         .slider-search { pointer-events: auto; }
-        .slider-search input {
-            width: 80%;
-            max-width: 500px;
-            padding: 14px 24px;
-            border-radius: 60px;
-            border: none;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            color: white;
-            font-size: 16px;
-            outline: none;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
+        .slider-search input { width: 80%; max-width: 500px; padding: 14px 24px; border-radius: 60px; border: none; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); color: white; font-size: 16px; outline: none; text-align: center; border: 1px solid rgba(255,255,255,0.3); }
         .slider-search input:focus { background: rgba(0,0,0,0.8); border-color: #e50914; }
         
-        /* Sections */
         .section-header { display: flex; justify-content: space-between; align-items: baseline; margin: 40px 0 20px; flex-wrap: wrap; }
         .section-title { font-size: 24px; font-weight: 700; border-left: 4px solid #e50914; padding-left: 15px; }
-        .pagination-controls { display: flex; gap: 8px; }
-        .page-btn { background: #1e2026; border: none; padding: 6px 14px; border-radius: 30px; color: #ccc; cursor: pointer; }
-        .page-btn.active, .page-btn:hover { background: #e50914; color: white; }
         
-        /* Grids – responsive columns */
+        /* Pagination - poshtë grid */
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 0 30px 0;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            background: #1e2026;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            color: #ccc;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+        .page-btn.active, .page-btn:hover {
+            background: #e50914;
+            color: white;
+        }
+        
         .movies-grid, .tv-grid {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
-        /* Cards */
         .movie-card, .tv-card {
             background: #181a24;
             border-radius: 14px;
@@ -183,38 +93,22 @@
         .card-info h4 { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-info p { font-size: 12px; color: #aaa; }
         
-        /* Favorite button */
         .favorite-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            border-radius: 50%;
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 20;
-            transition: 0.2s;
+            position: absolute; top: 10px; right: 10px;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            border-radius: 50%; width: 34px; height: 34px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 20; transition: 0.2s;
         }
         .favorite-btn i { font-size: 18px; }
         .favorite-btn i.fas { color: #e50914; }
         .favorite-btn i.far { color: #fff; }
         .favorite-btn:hover { transform: scale(1.1); background: rgba(0,0,0,0.8); }
         
-        /* Preview (desktop) */
         .preview-rich {
-            position: fixed;
-            width: 480px;
-            background: #1a1c22;
-            border-radius: 20px;
-            overflow: hidden;
-            z-index: 2000;
-            border: 1px solid #e50914;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.6);
+            position: fixed; width: 480px; background: #1a1c22;
+            border-radius: 20px; overflow: hidden; z-index: 2000;
+            border: 1px solid #e50914; box-shadow: 0 20px 35px rgba(0,0,0,0.6);
             pointer-events: auto;
         }
         .preview-trailer iframe { width: 100%; height: 270px; border: none; }
@@ -222,14 +116,12 @@
         .preview-info h4 { font-size: 18px; margin-bottom: 8px; color: #e50914; }
         .preview-info p { font-size: 14px; color: #ccc; }
         
-        /* Footer */
         .footer { margin-top: 60px; background: #0c0e12; border-radius: 30px 30px 0 0; padding: 40px 30px 20px; }
         .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 40px; }
         .footer-logo { font-size: 24px; font-weight: 800; background: linear-gradient(135deg,#fff,#e50914); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .social-links a { margin-right: 15px; color: #ccc; text-decoration: none; }
         .disclaimer { font-size: 12px; color: #888; background: #1a1c22; padding: 12px; border-radius: 12px; margin-top: 15px; }
         
-        /* Toast, Modal */
         .toast { position: fixed; bottom: 30px; right: 30px; background: #e50914; padding: 10px 20px; border-radius: 30px; opacity: 0; transition: 0.3s; z-index: 3500; }
         .toast.show { opacity: 1; }
         .modal { display: none; position: fixed; top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:3000;align-items:center;justify-content:center; }
@@ -244,70 +136,32 @@
         .back-to-home { display: inline-block; margin-bottom: 20px; background: #1e2026; padding: 8px 20px; border-radius: 30px; cursor: pointer; transition: 0.2s; }
         .back-to-home:hover { background: #e50914; }
         
-        /* ========== RESPONSIVE (Mobile) ========== */
+        /* Responsive mobile */
         @media (max-width: 768px) {
-            /* Sidebar becomes bottom navigation bar */
-            .sidebar {
-                position: fixed;
-                bottom: 0;
-                top: auto;
-                left: 0;
-                width: 100%;
-                height: 65px;
-                flex-direction: row;
-                justify-content: space-around;
-                padding: 8px 10px;
-                background: rgba(10,10,15,0.98);
-                border-right: none;
-                border-top: 1px solid rgba(255,255,255,0.08);
-                z-index: 200;
-            }
-            .sidebar-top, .sidebar-bottom {
-                flex-direction: row;
-                gap: 20px;
-                margin: 0;
-            }
-            .sidebar a span { display: none; } /* hide text, only icons */
+            .sidebar { position: fixed; bottom: 0; top: auto; left: 0; width: 100%; height: 65px; flex-direction: row; justify-content: space-around; padding: 8px 10px; background: rgba(10,10,15,0.98); border-right: none; border-top: 1px solid rgba(255,255,255,0.08); z-index: 200; }
+            .sidebar-top, .sidebar-bottom { flex-direction: row; gap: 20px; margin: 0; }
+            .sidebar a span { display: none; }
             .sidebar a i { font-size: 24px; }
-            .sidebar a { margin: 0; }
-            
             .main { margin-left: 0; padding: 15px 12px; max-width: 100%; margin-bottom: 65px; }
-            
-            /* Hero slider adjustments */
             .swiper { height: 400px; }
-            .slide-description-card {
-                left: 15px;
-                bottom: 20px;
-                max-width: calc(100% - 30px);
-                padding: 16px;
-            }
-            .slide-description-card h2 { font-size: 24px; margin-bottom: 6px; }
+            .slide-description-card { left: 15px; bottom: 20px; max-width: calc(100% - 30px); padding: 16px; }
+            .slide-description-card h2 { font-size: 24px; }
             .slide-meta { gap: 12px; font-size: 11px; flex-wrap: wrap; }
-            .slide-description-card p { font-size: 12px; margin-bottom: 10px; }
-            .slide-cast { font-size: 10px; margin-bottom: 12px; }
+            .slide-description-card p { font-size: 12px; }
+            .slide-cast { font-size: 10px; }
             .btn-watch { padding: 8px 20px; font-size: 14px; }
-            
             .slider-static-content h1 { font-size: 28px; margin-bottom: 10px; }
             .slider-search input { padding: 10px 16px; font-size: 14px; width: 90%; }
-            
             .section-title { font-size: 20px; }
-            .movies-grid, .tv-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px;
-            }
+            .movies-grid, .tv-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
             .card-info h4 { font-size: 12px; }
             .card-info p { font-size: 10px; }
-            
-            .preview-rich { display: none; } /* disable hover preview on mobile for usability */
-            
-            .footer { padding: 30px 20px; }
-            .footer-content { grid-template-columns: 1fr; gap: 25px; text-align: center; }
+            .preview-rich { display: none; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+            .page-btn { padding: 6px 12px; font-size: 12px; }
         }
-        
         @media (max-width: 480px) {
             .movies-grid, .tv-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .slide-description-card h2 { font-size: 20px; }
-            .btn-watch { padding: 6px 16px; font-size: 12px; }
         }
     </style>
 </head>
@@ -353,37 +207,84 @@
     </div>
 
     <div id="mainContent">
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-bolt"></i> Action</h2><div class="pagination-controls" id="actionPagination"></div></div>
-        <div class="movies-grid" id="actionGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-laugh"></i> Comedy</h2><div class="pagination-controls" id="comedyPagination"></div></div>
-        <div class="movies-grid" id="comedyGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-theater-masks"></i> Drama</h2><div class="pagination-controls" id="dramaPagination"></div></div>
-        <div class="movies-grid" id="dramaGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-skull"></i> Horror</h2><div class="pagination-controls" id="horrorPagination"></div></div>
-        <div class="movies-grid" id="horrorGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-heart"></i> Romance</h2><div class="pagination-controls" id="romancePagination"></div></div>
-        <div class="movies-grid" id="romanceGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-rocket"></i> Sci-Fi</h2><div class="pagination-controls" id="scifiPagination"></div></div>
-        <div class="movies-grid" id="scifiGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-globe"></i> Documentary</h2><div class="pagination-controls" id="docPagination"></div></div>
-        <div class="movies-grid" id="docGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-gavel"></i> Crime</h2><div class="pagination-controls" id="crimePagination"></div></div>
-        <div class="movies-grid" id="crimeGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-map-marked-alt"></i> Adventure</h2><div class="pagination-controls" id="adventurePagination"></div></div>
-        <div class="movies-grid" id="adventureGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-dragon"></i> Fantasy</h2><div class="pagination-controls" id="fantasyPagination"></div></div>
-        <div class="movies-grid" id="fantasyGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-fist-raised"></i> War</h2><div class="pagination-controls" id="warPagination"></div></div>
-        <div class="movies-grid" id="warGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-hat-cowboy"></i> Western</h2><div class="pagination-controls" id="westernPagination"></div></div>
-        <div class="movies-grid" id="westernGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-music"></i> Music</h2><div class="pagination-controls" id="musicPagination"></div></div>
-        <div class="movies-grid" id="musicGrid"></div>
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-landmark"></i> History</h2><div class="pagination-controls" id="historyPagination"></div></div>
-        <div class="movies-grid" id="historyGrid"></div>
+        <!-- 14 genre sections - each with header, grid, and pagination at bottom -->
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-bolt"></i> Action</h2></div>
+            <div class="movies-grid" id="actionGrid"></div>
+            <div class="pagination-controls" id="actionPagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-laugh"></i> Comedy</h2></div>
+            <div class="movies-grid" id="comedyGrid"></div>
+            <div class="pagination-controls" id="comedyPagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-theater-masks"></i> Drama</h2></div>
+            <div class="movies-grid" id="dramaGrid"></div>
+            <div class="pagination-controls" id="dramaPagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-skull"></i> Horror</h2></div>
+            <div class="movies-grid" id="horrorGrid"></div>
+            <div class="pagination-controls" id="horrorPagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-heart"></i> Romance</h2></div>
+            <div class="movies-grid" id="romanceGrid"></div>
+            <div class="pagination-controls" id="romancePagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-rocket"></i> Sci-Fi</h2></div>
+            <div class="movies-grid" id="scifiGrid"></div>
+            <div class="pagination-controls" id="scifiPagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-globe"></i> Documentary</h2></div>
+            <div class="movies-grid" id="docGrid"></div>
+            <div class="pagination-controls" id="docPagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-gavel"></i> Crime</h2></div>
+            <div class="movies-grid" id="crimeGrid"></div>
+            <div class="pagination-controls" id="crimePagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-map-marked-alt"></i> Adventure</h2></div>
+            <div class="movies-grid" id="adventureGrid"></div>
+            <div class="pagination-controls" id="adventurePagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-dragon"></i> Fantasy</h2></div>
+            <div class="movies-grid" id="fantasyGrid"></div>
+            <div class="pagination-controls" id="fantasyPagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-fist-raised"></i> War</h2></div>
+            <div class="movies-grid" id="warGrid"></div>
+            <div class="pagination-controls" id="warPagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-hat-cowboy"></i> Western</h2></div>
+            <div class="movies-grid" id="westernGrid"></div>
+            <div class="pagination-controls" id="westernPagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-music"></i> Music</h2></div>
+            <div class="movies-grid" id="musicGrid"></div>
+            <div class="pagination-controls" id="musicPagination"></div>
+        </div>
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-landmark"></i> History</h2></div>
+            <div class="movies-grid" id="historyGrid"></div>
+            <div class="pagination-controls" id="historyPagination"></div>
+        </div>
 
-        <div class="section-header"><h2 class="section-title"><i class="fas fa-crown"></i> Featured TV Series</h2><div class="pagination-controls" id="tvPagination"></div></div>
-        <div class="tv-grid" id="tvSeriesGrid"></div>
+        <!-- Featured TV Series -->
+        <div class="genre-section">
+            <div class="section-header"><h2 class="section-title"><i class="fas fa-crown"></i> Featured TV Series</h2></div>
+            <div class="tv-grid" id="tvSeriesGrid"></div>
+            <div class="pagination-controls" id="tvPagination"></div>
+        </div>
     </div>
 
     <footer class="footer">
@@ -425,23 +326,15 @@
         // =============== FAVORITES (localStorage) ===============
         let favorites = JSON.parse(localStorage.getItem('alb_favorites')) || [];
 
-        function saveFavorites() {
-            localStorage.setItem('alb_favorites', JSON.stringify(favorites));
-        }
-
-        function isFavorite(id, type) {
-            return favorites.some(f => f.id == id && f.type === type);
-        }
-
+        function saveFavorites() { localStorage.setItem('alb_favorites', JSON.stringify(favorites)); }
+        function isFavorite(id, type) { return favorites.some(f => f.id == id && f.type === type); }
         function updateAllFavoriteIcons(id, type, isFav) {
-            const btns = document.querySelectorAll(`.favorite-btn[data-id="${id}"][data-type="${type}"]`);
-            btns.forEach(btn => {
+            document.querySelectorAll(`.favorite-btn[data-id="${id}"][data-type="${type}"]`).forEach(btn => {
                 const icon = btn.querySelector('i');
                 if (isFav) icon.className = 'fas fa-heart';
                 else icon.className = 'far fa-heart';
             });
         }
-
         function addFavorite(item) {
             if (!isFavorite(item.id, item.type)) {
                 favorites.push({ id: item.id, type: item.type, title: item.title, poster: item.poster });
@@ -451,23 +344,20 @@
                 if (document.getElementById('favoritesSection').classList.contains('active')) displayFavorites();
             }
         }
-
         function removeFavorite(id, type) {
-            const favItem = favorites.find(f => f.id == id && f.type === type);
-            if (favItem) {
-                favorites = favorites.filter(f => !(f.id == id && f.type === type));
+            const idx = favorites.findIndex(f => f.id == id && f.type === type);
+            if (idx !== -1) {
+                favorites.splice(idx, 1);
                 saveFavorites();
                 showToast(`💔 Removed from favorites`);
                 updateAllFavoriteIcons(id, type, false);
                 if (document.getElementById('favoritesSection').classList.contains('active')) displayFavorites();
             }
         }
-
         function toggleFavorite(id, type, title, poster) {
             if (isFavorite(id, type)) removeFavorite(id, type);
             else addFavorite({ id, type, title, poster });
         }
-
         function displayFavorites() {
             const container = document.getElementById('favoritesGrid');
             if (!container) return;
@@ -479,8 +369,6 @@
             favorites.forEach(fav => {
                 const card = document.createElement('div');
                 card.className = 'movie-card';
-                card.setAttribute('data-id', fav.id);
-                card.setAttribute('data-type', fav.type);
                 card.innerHTML = `
                     <div class="favorite-btn" data-id="${fav.id}" data-type="${fav.type}" data-title="${fav.title.replace(/'/g, "\\'")}" data-poster="${fav.poster || ''}">
                         <i class="fas fa-heart"></i>
@@ -502,9 +390,9 @@
             });
         }
 
-        // =============== PREVIEW (only on desktop, disabled on mobile via CSS) ===============
+        // =============== PREVIEW (desktop only) ===============
         function showRichPreview(item, cardEl, isTv) {
-            if (window.innerWidth <= 768) return; // no preview on mobile
+            if (window.innerWidth <= 768) return;
             if (activePreview && currentCard === cardEl) return;
             removePreview();
             currentCard = cardEl;
@@ -545,7 +433,6 @@
                 }).catch(e => console.error(e));
             }).catch(e => console.error(e));
         }
-
         function removePreview() {
             if (activePreview) { activePreview.remove(); activePreview = null; }
             if (previewTimeout) clearTimeout(previewTimeout);
@@ -602,31 +489,33 @@
             document.getElementById(containerId).appendChild(card);
         }
 
-        // =============== LOAD GENRE MOVIES, TV SHOWS, HERO SLIDER, SEARCH (unchanged logic) ===============
+        // =============== LOAD MOVIES BY GENRE WITH PAGINATION (fix active class) ===============
         async function loadGenreMovies(genreId, gridId, pagId, page = 1) {
             const grid = document.getElementById(gridId);
+            const pagContainer = document.getElementById(pagId);
             if (!grid) return;
-            if (page === 1) grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Loading...</div>';
+            grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px;">Loading movies...</div>';
             try {
                 const res = await fetch(`${BASE}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc&vote_count.gte=100&language=en-US&page=${page}`);
                 const data = await res.json();
-                const totalPages = Math.min(data.total_pages, 5);
-                if (page === 1) grid.innerHTML = '';
+                const totalPages = Math.min(data.total_pages, 8);
+                grid.innerHTML = '';
                 data.results.forEach(m => createCard(m, false, gridId));
-                const pagContainer = document.getElementById(pagId);
-                if (pagContainer && page === 1) {
-                    pagContainer.innerHTML = '';
-                    for (let i = 1; i <= totalPages; i++) {
-                        const btn = document.createElement('button');
-                        btn.textContent = i;
-                        btn.className = `page-btn ${i === page ? 'active' : ''}`;
-                        btn.onclick = () => { grid.innerHTML = ''; loadGenreMovies(genreId, gridId, pagId, i); };
-                        pagContainer.appendChild(btn);
-                    }
+                // Pagination buttons
+                pagContainer.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = `page-btn ${i === page ? 'active' : ''}`;
+                    btn.onclick = (function(p) {
+                        return function() { loadGenreMovies(genreId, gridId, pagId, p); };
+                    })(i);
+                    pagContainer.appendChild(btn);
                 }
-            } catch(e) { console.error(e); grid.innerHTML = '<div>Error</div>'; }
+            } catch(e) { console.error(e); grid.innerHTML = '<div>Error loading movies</div>'; }
         }
 
+        // =============== TV SERIES ===============
         const customTvIds = [
             1396,60573,1399,46530,1416,1402,4629,62074,48866,46298,44608,47061,20798,70646,456,72759,
             1405,1434,1398,1394,46285,94941,1488,1390,76479,44217,651,4614,1100,82856,76489,112733,
@@ -636,15 +525,15 @@
             713,714,715,716,717,718,719,720,721,722,723,724,334,164,21,438,459,839,840,841,842,843,
             844,845,846,847,848,849,850,851,852,853
         ];
-        let tvCurrentPage = 1, tvTotalPages = 5;
         async function loadTVShows(page = 1) {
             const grid = document.getElementById('tvSeriesGrid');
+            const pagContainer = document.getElementById('tvPagination');
             if (!grid) return;
-            if (page === 1) grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">Loading series...</div>';
+            grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px;">Loading series...</div>';
             try {
                 const topRatedRes = await fetch(`${BASE}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`);
                 const topRatedData = await topRatedRes.json();
-                tvTotalPages = Math.min(topRatedData.total_pages, 5);
+                const totalPages = Math.min(topRatedData.total_pages, 8);
                 if (page === 1) {
                     grid.innerHTML = '';
                     for (let id of customTvIds.slice(0,250)) {
@@ -654,22 +543,22 @@
                             if (show.id) createCard(show, true, 'tvSeriesGrid');
                         } catch(e) {}
                     }
+                } else {
+                    grid.innerHTML = '';
                 }
                 topRatedData.results.forEach(show => createCard(show, true, 'tvSeriesGrid'));
-                const pagContainer = document.getElementById('tvPagination');
-                if (pagContainer && page === 1) {
-                    pagContainer.innerHTML = '';
-                    for (let i = 1; i <= tvTotalPages; i++) {
-                        const btn = document.createElement('button');
-                        btn.textContent = i;
-                        btn.className = `page-btn ${i === page ? 'active' : ''}`;
-                        btn.onclick = () => { grid.innerHTML = ''; loadTVShows(i); };
-                        pagContainer.appendChild(btn);
-                    }
+                pagContainer.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = `page-btn ${i === page ? 'active' : ''}`;
+                    btn.onclick = (function(p) { return function() { loadTVShows(p); }; })(i);
+                    pagContainer.appendChild(btn);
                 }
-            } catch(e) { console.error(e); }
+            } catch(e) { console.error(e); grid.innerHTML = '<div>Error loading series</div>'; }
         }
 
+        // =============== HERO SLIDER ===============
         async function loadHeroSlider() {
             const res = await fetch(`${BASE}/trending/movie/day?api_key=${API_KEY}&language=en-US`);
             const data = await res.json();
@@ -711,6 +600,7 @@
             });
         }
 
+        // =============== SEARCH ===============
         async function searchContent(query) {
             const container = document.getElementById('searchResultsContainer');
             const grid = document.getElementById('searchGrid');
@@ -726,6 +616,7 @@
             } catch(e) { console.error(e); }
         }
 
+        // =============== INITIALIZE GENRES ===============
         function initGenres() {
             const genres = [
                 { id:28, grid:'actionGrid', pag:'actionPagination' }, { id:35, grid:'comedyGrid', pag:'comedyPagination' },
@@ -739,19 +630,18 @@
             genres.forEach(g => loadGenreMovies(g.id, g.grid, g.pag, 1));
         }
 
+        // =============== FAVORITES SECTION ===============
         function showFavorites() {
             document.getElementById('mainContent').style.display = 'none';
             document.getElementById('searchResultsContainer').style.display = 'none';
             document.getElementById('favoritesSection').classList.add('active');
             displayFavorites();
         }
-
         function showMainContent() {
             document.getElementById('mainContent').style.display = 'block';
             document.getElementById('favoritesSection').classList.remove('active');
             document.getElementById('searchResultsContainer').style.display = 'none';
         }
-
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
@@ -759,13 +649,13 @@
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Event listeners
+        // =============== EVENT LISTENERS ===============
         document.getElementById('searchInputSlider').addEventListener('input', e => searchContent(e.target.value));
         document.getElementById('userIconSidebar').onclick = () => document.getElementById('authModal').style.display = 'flex';
         document.querySelector('.close-modal').onclick = () => document.getElementById('authModal').style.display = 'none';
         document.getElementById('demoLoginBtn').onclick = () => { showToast('Demo login'); document.getElementById('authModal').style.display = 'none'; };
         document.getElementById('homeLink').addEventListener('click', (e) => { e.preventDefault(); showMainContent(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
-        document.getElementById('moviesLink').addEventListener('click', (e) => { e.preventDefault(); showMainContent(); document.getElementById('actionGrid').scrollIntoView({ behavior: 'smooth' }); });
+        document.getElementById('moviesLink').addEventListener('click', (e) => { e.preventDefault(); showMainContent(); document.getElementById('actionGrid').closest('.genre-section')?.scrollIntoView({ behavior: 'smooth' }); });
         document.getElementById('favoritesLink').addEventListener('click', (e) => { e.preventDefault(); showFavorites(); });
         document.getElementById('backToHomeBtn').addEventListener('click', () => { showMainContent(); });
 
