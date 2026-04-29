@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlbFilms24 - Watch</title>
+    <style>
+        body { margin: 0; background: #0a0a0a; color: #fff; font-family: Arial, sans-serif; }
+        .container { max-width: 1000px; margin: auto; padding: 20px; text-align: center; }
+        iframe { width: 100%; height: 520px; border: none; border-radius: 12px; background: #000; }
+        .back { display: inline-block; margin-top: 20px; color: #e50914; text-decoration: none; }
+        h2 { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 id="title">Loading...</h2>
+    <iframe id="player" allowfullscreen allow="autoplay; fullscreen"></iframe>
+    <br><a href="javascript:history.back()" class="back">← Back to Home</a>
+</div>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const type = params.get('type') || 'movie';
+    if (id) {
+        let embedUrl = '';
+        if (type === 'movie') embedUrl = `https://vidsrcme.ru/embed/movie/${id}`;
+        else embedUrl = `https://vidsrcme.ru/embed/tv/${id}/1/1`; // default first episode for TV
+        document.getElementById('player').src = embedUrl;
+        document.getElementById('title').innerText = type === 'movie' ? 'Now Playing' : 'TV Series (Episode 1)';
+    } else {
+        document.getElementById('title').innerText = 'Invalid ID';
+    }
+</script>
+</body>
+</html>
