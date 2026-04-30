@@ -219,24 +219,24 @@
 
     let currentServer = 'vidsrc';
 
-    // ============ PËRCAKTO SERVERËT ============
+    // ============ PËRCAKTO SERVERËT ME EMRA TË THJESHTË ============
     const servers = {
         vidsrc: {
-            name: 'Server 1 (VidSrc)',
+            name: 'Server 1',
             getUrl: (id, type) => {
                 if (type === 'movie') return `https://vidsrcme.ru/embed/movie/${id}`;
                 return `https://vidsrcme.ru/embed/tv/${id}/1/1`;
             }
         },
         multiembed: {
-            name: 'Server 2 (MultiEmbed - AirPlay friendly)',
+            name: 'Server 2 (AirPlay)',
             getUrl: (id, type) => {
                 if (type === 'movie') return `https://multiembed.mov/?video_id=${id}&tmdb=1`;
                 return `https://multiembed.mov/?video_id=${id}&tmdb=1&tv=1`;
             }
         },
         embed2: {
-            name: 'Server 3 (2Embed)',
+            name: 'Server 3',
             getUrl: (id, type) => {
                 if (type === 'movie') return `https://www.2embed.cc/embed/${id}`;
                 return `https://www.2embed.cc/embedtv/${id}&season=1&episode=1`;
