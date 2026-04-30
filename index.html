@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>AlbFilms24</title>
+    <title>AlbFilms24 - Online Streaming HD</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -48,11 +48,25 @@
         .card-info { padding: 12px; }
         .card-info h4 { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-info p { font-size: 12px; color: #aaa; }
-        .favorite-btn { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; transition: 0.2s; }
-        .favorite-btn i { font-size: 18px; }
+        .card-icons { position: absolute; top: 10px; right: 10px; display: flex; gap: 8px; z-index: 20; }
+        .favorite-btn, .watchlater-btn {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .favorite-btn i, .watchlater-btn i { font-size: 18px; }
         .favorite-btn i.fas { color: #e50914; }
         .favorite-btn i.far { color: #fff; }
-        .favorite-btn:hover { transform: scale(1.1); background: rgba(0,0,0,0.8); }
+        .watchlater-btn i.fas { color: #4caf50; }
+        .watchlater-btn i.far { color: #fff; }
+        .favorite-btn:hover, .watchlater-btn:hover { transform: scale(1.1); background: rgba(0,0,0,0.8); }
         .preview-rich { position: fixed; width: 480px; background: #1a1c22; border-radius: 20px; overflow: hidden; z-index: 2000; border: 1px solid #e50914; box-shadow: 0 20px 35px rgba(0,0,0,0.6); pointer-events: auto; }
         .preview-trailer iframe { width: 100%; height: 270px; border: none; }
         .preview-info { padding: 16px; }
@@ -71,8 +85,8 @@
         .auth-form { display:flex; flex-direction:column; gap:12px; margin-top:20px; }
         .auth-form input { padding:10px; border-radius:30px; border:none; background:#2a2c30; color:white; }
         .btn-primary { background:#e50914; border:none; padding:10px; border-radius:30px; color:white; cursor:pointer; }
-        .favorites-section { display: none; margin-top: 20px; }
-        .favorites-section.active { display: block; }
+        .favorites-section, .watchlist-section { display: none; margin-top: 20px; }
+        .favorites-section.active, .watchlist-section.active { display: block; }
         .back-to-home { display: inline-block; margin-bottom: 20px; background: #1e2026; padding: 8px 20px; border-radius: 30px; cursor: pointer; transition: 0.2s; }
         .back-to-home:hover { background: #e50914; }
         @media (max-width: 768px) {
@@ -111,6 +125,7 @@
         <a href="#" id="moviesLink"><i class="fas fa-film"></i><span>Movies</span></a>
         <a href="tvshows.html" id="tvShowLink"><i class="fas fa-tv"></i><span>TV Shows</span></a>
         <a href="#" id="favoritesLink"><i class="fas fa-heart"></i><span>Favorites</span></a>
+        <a href="#" id="watchlistLink"><i class="fas fa-clock"></i><span>Watch Later</span></a>
     </div>
     <div class="sidebar-bottom">
         <a href="#" id="userIconSidebar"><i class="fas fa-user-circle"></i><span>Login</span></a>
@@ -139,13 +154,18 @@
     </div>
 
     <div id="favoritesSection" class="favorites-section">
-        <div class="back-to-home" id="backToHomeBtn"><i class="fas fa-arrow-left"></i> Back to Home</div>
+        <div class="back-to-home" id="backToHomeBtnFav"><i class="fas fa-arrow-left"></i> Back to Home</div>
         <div class="section-header"><h2 class="section-title"><i class="fas fa-heart"></i> Your Favorites</h2></div>
         <div class="movies-grid" id="favoritesGrid"></div>
     </div>
 
+    <div id="watchlistSection" class="watchlist-section">
+        <div class="back-to-home" id="backToHomeBtnWatch"><i class="fas fa-arrow-left"></i> Back to Home</div>
+        <div class="section-header"><h2 class="section-title"><i class="fas fa-clock"></i> Watch Later</h2></div>
+        <div class="movies-grid" id="watchlistGrid"></div>
+    </div>
+
     <div id="mainContent">
-    <!-- 14 genre sections -->
         <div class="genre-section">
             <div class="section-header"><h2 class="section-title"><i class="fas fa-bolt"></i> Action</h2></div>
             <div class="movies-grid" id="actionGrid"></div>
@@ -217,7 +237,6 @@
             <div class="pagination-controls" id="historyPagination"></div>
         </div>
 
-        <!-- Featured TV Series -->
         <div class="genre-section">
             <div class="section-header"><h2 class="section-title"><i class="fas fa-crown"></i> Featured TV Series</h2></div>
             <div class="tv-grid" id="tvSeriesGrid"></div>
@@ -262,22 +281,35 @@
         let currentCard = null;
 
         let favorites = JSON.parse(localStorage.getItem('alb_favorites')) || [];
+        let watchlist = JSON.parse(localStorage.getItem('alb_watchlist')) || [];
 
         function saveFavorites() { localStorage.setItem('alb_favorites', JSON.stringify(favorites)); }
+        function saveWatchlist() { localStorage.setItem('alb_watchlist', JSON.stringify(watchlist)); }
+
         function isFavorite(id, type) { return favorites.some(f => f.id == id && f.type === type); }
-        function updateAllFavoriteIcons(id, type, isFav) {
+        function isWatchlist(id, type) { return watchlist.some(w => w.id == id && w.type === type); }
+
+        function updateIcons(id, type) {
+            const isFav = isFavorite(id, type);
+            const isWatch = isWatchlist(id, type);
             document.querySelectorAll(`.favorite-btn[data-id="${id}"][data-type="${type}"]`).forEach(btn => {
                 const icon = btn.querySelector('i');
                 if (isFav) icon.className = 'fas fa-heart';
                 else icon.className = 'far fa-heart';
             });
+            document.querySelectorAll(`.watchlater-btn[data-id="${id}"][data-type="${type}"]`).forEach(btn => {
+                const icon = btn.querySelector('i');
+                if (isWatch) icon.className = 'fas fa-clock';
+                else icon.className = 'far fa-clock';
+            });
         }
+
         function addFavorite(item) {
             if (!isFavorite(item.id, item.type)) {
                 favorites.push({ id: item.id, type: item.type, title: item.title, poster: item.poster });
                 saveFavorites();
                 showToast(`❤️ "${item.title}" added to favorites`);
-                updateAllFavoriteIcons(item.id, item.type, true);
+                updateIcons(item.id, item.type);
                 if (document.getElementById('favoritesSection').classList.contains('active')) displayFavorites();
             }
         }
@@ -287,7 +319,7 @@
                 favorites.splice(idx, 1);
                 saveFavorites();
                 showToast(`💔 Removed from favorites`);
-                updateAllFavoriteIcons(id, type, false);
+                updateIcons(id, type);
                 if (document.getElementById('favoritesSection').classList.contains('active')) displayFavorites();
             }
         }
@@ -295,6 +327,31 @@
             if (isFavorite(id, type)) removeFavorite(id, type);
             else addFavorite({ id, type, title, poster });
         }
+
+        function addWatchlist(item) {
+            if (!isWatchlist(item.id, item.type)) {
+                watchlist.push({ id: item.id, type: item.type, title: item.title, poster: item.poster });
+                saveWatchlist();
+                showToast(`⏰ "${item.title}" added to watch later`);
+                updateIcons(item.id, item.type);
+                if (document.getElementById('watchlistSection').classList.contains('active')) displayWatchlist();
+            }
+        }
+        function removeWatchlist(id, type) {
+            const idx = watchlist.findIndex(w => w.id == id && w.type === type);
+            if (idx !== -1) {
+                watchlist.splice(idx, 1);
+                saveWatchlist();
+                showToast(`⏰ Removed from watch later`);
+                updateIcons(id, type);
+                if (document.getElementById('watchlistSection').classList.contains('active')) displayWatchlist();
+            }
+        }
+        function toggleWatchlist(id, type, title, poster) {
+            if (isWatchlist(id, type)) removeWatchlist(id, type);
+            else addWatchlist({ id, type, title, poster });
+        }
+
         function displayFavorites() {
             const container = document.getElementById('favoritesGrid');
             if (!container) return;
@@ -307,20 +364,54 @@
                 const card = document.createElement('div');
                 card.className = 'movie-card';
                 card.innerHTML = `
-                    <div class="favorite-btn" data-id="${fav.id}" data-type="${fav.type}" data-title="${fav.title.replace(/'/g, "\\'")}" data-poster="${fav.poster || ''}"><i class="fas fa-heart"></i></div>
+                    <div class="card-icons">
+                        <div class="favorite-btn" data-id="${fav.id}" data-type="${fav.type}" data-title="${fav.title.replace(/'/g, "\\'")}" data-poster="${fav.poster || ''}"><i class="fas fa-heart"></i></div>
+                        <div class="watchlater-btn" data-id="${fav.id}" data-type="${fav.type}" data-title="${fav.title.replace(/'/g, "\\'")}" data-poster="${fav.poster || ''}"><i class="${isWatchlist(fav.id, fav.type) ? 'fas' : 'far'} fa-clock"></i></div>
+                    </div>
                     <img class="poster" src="${fav.poster ? IMG+fav.poster : 'https://via.placeholder.com/300x450?text=No+Image'}" alt="${fav.title}">
                     <div class="card-info"><h4>${fav.title}</h4><p>⭐ Favorite</p></div>
                 `;
                 card.addEventListener('click', (e) => {
-                    if (e.target.closest('.favorite-btn')) return;
+                    if (e.target.closest('.favorite-btn') || e.target.closest('.watchlater-btn')) return;
                     if (fav.type === 'tv') window.location.href = `tv.html?id=${fav.id}`;
                     else window.location.href = `watch.html?id=${fav.id}&type=movie`;
                 });
                 const favBtn = card.querySelector('.favorite-btn');
-                favBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    removeFavorite(fav.id, fav.type);
+                const watchBtn = card.querySelector('.watchlater-btn');
+                favBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleFavorite(fav.id, fav.type, fav.title, fav.poster); });
+                watchBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleWatchlist(fav.id, fav.type, fav.title, fav.poster); });
+                container.appendChild(card);
+            });
+        }
+
+        function displayWatchlist() {
+            const container = document.getElementById('watchlistGrid');
+            if (!container) return;
+            container.innerHTML = '';
+            if (watchlist.length === 0) {
+                container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px;">No items in watch later. Click the ⏰ on movies or series to add them.</div>';
+                return;
+            }
+            watchlist.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'movie-card';
+                card.innerHTML = `
+                    <div class="card-icons">
+                        <div class="favorite-btn" data-id="${item.id}" data-type="${item.type}" data-title="${item.title.replace(/'/g, "\\'")}" data-poster="${item.poster || ''}"><i class="${isFavorite(item.id, item.type) ? 'fas' : 'far'} fa-heart"></i></div>
+                        <div class="watchlater-btn" data-id="${item.id}" data-type="${item.type}" data-title="${item.title.replace(/'/g, "\\'")}" data-poster="${item.poster || ''}"><i class="fas fa-clock"></i></div>
+                    </div>
+                    <img class="poster" src="${item.poster ? IMG+item.poster : 'https://via.placeholder.com/300x450?text=No+Image'}" alt="${item.title}">
+                    <div class="card-info"><h4>${item.title}</h4><p>⏰ Watch Later</p></div>
+                `;
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.favorite-btn') || e.target.closest('.watchlater-btn')) return;
+                    if (item.type === 'tv') window.location.href = `tv.html?id=${item.id}`;
+                    else window.location.href = `watch.html?id=${item.id}&type=movie`;
                 });
+                const favBtn = card.querySelector('.favorite-btn');
+                const watchBtn = card.querySelector('.watchlater-btn');
+                favBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleFavorite(item.id, item.type, item.title, item.poster); });
+                watchBtn.addEventListener('click', (e) => { e.stopPropagation(); removeWatchlist(item.id, item.type); });
                 container.appendChild(card);
             });
         }
@@ -372,8 +463,12 @@
             const rating = item.vote_average ? item.vote_average.toFixed(1) : '?';
             const poster = item.poster_path || '';
             const isFav = isFavorite(id, type);
+            const isWatch = isWatchlist(id, type);
             card.innerHTML = `
-                <div class="favorite-btn" data-id="${id}" data-type="${type}" data-title="${title.replace(/'/g, "\\'")}" data-poster="${poster}"><i class="${isFav ? 'fas' : 'far'} fa-heart"></i></div>
+                <div class="card-icons">
+                    <div class="favorite-btn" data-id="${id}" data-type="${type}" data-title="${title.replace(/'/g, "\\'")}" data-poster="${poster}"><i class="${isFav ? 'fas' : 'far'} fa-heart"></i></div>
+                    <div class="watchlater-btn" data-id="${id}" data-type="${type}" data-title="${title.replace(/'/g, "\\'")}" data-poster="${poster}"><i class="${isWatch ? 'fas' : 'far'} fa-clock"></i></div>
+                </div>
                 <img class="poster" src="${poster ? IMG+poster : 'https://via.placeholder.com/300x450?text=No+Image'}" alt="${title}">
                 <div class="card-info"><h4>${title}</h4><p>${year} ⭐ ${rating}</p></div>
             `;
@@ -383,9 +478,15 @@
                 clearTimeout(hoverTimeout);
                 if (window.innerWidth > 768) setTimeout(() => { if (activePreview && !activePreview.matches(':hover') && !card.matches(':hover')) { removePreview(); currentCard = null; } }, 100);
             });
-            card.addEventListener('click', (e) => { if (e.target.closest('.favorite-btn')) return; if (isTv) window.location.href = `tv.html?id=${id}`; else window.location.href = `watch.html?id=${id}&type=movie`; });
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('.favorite-btn') || e.target.closest('.watchlater-btn')) return;
+                if (isTv) window.location.href = `tv.html?id=${id}`;
+                else window.location.href = `watch.html?id=${id}&type=movie`;
+            });
             const favBtn = card.querySelector('.favorite-btn');
+            const watchBtn = card.querySelector('.watchlater-btn');
             favBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleFavorite(id, type, title, poster); });
+            watchBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleWatchlist(id, type, title, poster); });
             document.getElementById(containerId).appendChild(card);
         }
 
@@ -405,13 +506,7 @@
                     const btn = document.createElement('button');
                     btn.textContent = i;
                     btn.className = `page-btn ${i === page ? 'active' : ''}`;
-                    btn.onclick = (function(p) {
-                        return function() {
-                            loadGenreMovies(genreId, gridId, pagId, p);
-                            const section = document.getElementById(gridId).closest('.genre-section');
-                            if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        };
-                    })(i);
+                    btn.onclick = (function(p) { return function() { loadGenreMovies(genreId, gridId, pagId, p); const section = document.getElementById(gridId).closest('.genre-section'); if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' }); }; })(i);
                     pagContainer.appendChild(btn);
                 }
             } catch(e) { console.error(e); grid.innerHTML = '<div>Error loading movies</div>'; }
@@ -493,9 +588,32 @@
             genres.forEach(g => loadGenreMovies(g.id, g.grid, g.pag, 1));
         }
 
-        function showFavorites() { document.getElementById('mainContent').style.display = 'none'; document.getElementById('searchResultsContainer').style.display = 'none'; document.getElementById('favoritesSection').classList.add('active'); displayFavorites(); }
-        function showMainContent() { document.getElementById('mainContent').style.display = 'block'; document.getElementById('favoritesSection').classList.remove('active'); document.getElementById('searchResultsContainer').style.display = 'none'; }
-        function showToast(msg) { const toast = document.getElementById('toast'); toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3000); }
+        function showFavorites() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('searchResultsContainer').style.display = 'none';
+            document.getElementById('watchlistSection').classList.remove('active');
+            document.getElementById('favoritesSection').classList.add('active');
+            displayFavorites();
+        }
+        function showWatchlist() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('searchResultsContainer').style.display = 'none';
+            document.getElementById('favoritesSection').classList.remove('active');
+            document.getElementById('watchlistSection').classList.add('active');
+            displayWatchlist();
+        }
+        function showMainContent() {
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('favoritesSection').classList.remove('active');
+            document.getElementById('watchlistSection').classList.remove('active');
+            document.getElementById('searchResultsContainer').style.display = 'none';
+        }
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
 
         document.getElementById('searchInputSlider').addEventListener('input', e => searchContent(e.target.value));
         document.getElementById('userIconSidebar').onclick = () => document.getElementById('authModal').style.display = 'flex';
@@ -504,7 +622,9 @@
         document.getElementById('homeLink').addEventListener('click', (e) => { e.preventDefault(); showMainContent(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
         document.getElementById('moviesLink').addEventListener('click', (e) => { e.preventDefault(); showMainContent(); document.getElementById('actionGrid').closest('.genre-section')?.scrollIntoView({ behavior: 'smooth' }); });
         document.getElementById('favoritesLink').addEventListener('click', (e) => { e.preventDefault(); showFavorites(); });
-        document.getElementById('backToHomeBtn').addEventListener('click', () => { showMainContent(); });
+        document.getElementById('watchlistLink').addEventListener('click', (e) => { e.preventDefault(); showWatchlist(); });
+        document.getElementById('backToHomeBtnFav').addEventListener('click', () => { showMainContent(); });
+        document.getElementById('backToHomeBtnWatch').addEventListener('click', () => { showMainContent(); });
 
         loadHeroSlider();
         initGenres();
